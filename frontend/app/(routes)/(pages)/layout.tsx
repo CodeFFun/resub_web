@@ -7,11 +7,9 @@ export default function PagesLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+      <div>
         <Navbar />
         {children}
-      </body>
-    </html>
+      </div>
   );
 }

@@ -7,6 +7,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ZodError } from "zod"
 import { LoginInput, loginSchema } from "./lib/validation"
+import { handleLogin } from "@/lib/actions/auth-action"
+import { toast } from "sonner"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
@@ -25,9 +27,11 @@ export function LoginForm() {
         email,
         password,
       })
-      // TODO: Implement login logic
-      console.log("Login attempt:", validatedData)
-      router.push("/auth/dashboard")
+      const res = await handleLogin(validatedData)
+      if (res.success) {
+        toast("Login successful!")
+        router.push("/auth/dashboard")
+      }
     } catch (error) {
       if (error instanceof ZodError) {
         const fieldErrors: Partial<LoginInput> = {}
@@ -36,6 +40,7 @@ export function LoginForm() {
           fieldErrors[field] = err.message 
         })
         setErrors(fieldErrors)
+        toast("Please fix the errors in the form.")
       }
     } finally {
       setIsLoading(false)

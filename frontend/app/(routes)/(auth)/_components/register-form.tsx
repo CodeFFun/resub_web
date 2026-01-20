@@ -7,6 +7,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ZodError } from "zod"
 import { RegisterInput, registerSchema } from "./lib/validation"
+import { handleRegister } from "@/lib/actions/auth-action"
+import { toast } from "sonner"
 
 export function RegisterForm() {
   const [name, setName] = useState("")
@@ -23,13 +25,15 @@ export function RegisterForm() {
 
     try {
       const validatedData = registerSchema.parse({
-        name,
+        username: name,
         email,
         password,
       })
-      // TODO: Implement registration logic
-      console.log("Registration attempt:", validatedData)
-      router.push("/auth/dashboard")
+      const res = await handleRegister(validatedData)
+      if (res.success) {
+        toast("Registration successful!")
+        router.push("/login")
+      }
     } catch (error) {
       if (error instanceof ZodError) {
         const fieldErrors: Partial<RegisterInput> = {}
@@ -38,6 +42,7 @@ export function RegisterForm() {
           fieldErrors[field] = err.message 
         })
         setErrors(fieldErrors)
+        toast("Please fix the errors in the form.")
       }
     } finally {
       setIsLoading(false)
@@ -57,11 +62,11 @@ export function RegisterForm() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           className={`w-full bg-transparent py-3 px-0 placeholder-muted-foreground focus:outline-none transition-colors ${
-            errors.name ? "border-b-2 border-red-500" : "border-b border-muted-foreground"
+            errors.username ? "border-b-2 border-red-500" : "border-b border-muted-foreground"
           }`}
           required
         />
-        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+        {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
       </div>
 
       <div>

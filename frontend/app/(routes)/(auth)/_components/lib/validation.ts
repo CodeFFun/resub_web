@@ -6,7 +6,7 @@ export const loginSchema = z.object({
 })
 
 export const registerSchema = z.object({
-  name: z.string().min(1, "This field is empty"),
+  username: z.string().min(1, "This field is empty"),
   email: z.string().min(1, "This field is empty"),
   password: z.string().min(1, "This field is empty"),
 })
