@@ -6,6 +6,7 @@ export interface IUserRepository {
     getUserById(id: string): Promise<IUser | null>;
     getAllUsers(): Promise<IUser[]>;
     updateUser(id: string, updateData: Partial<IUser>): Promise<IUser | null>;
+    updateUserByAdmin(id: string, updateData: Partial<IUser>): Promise<IUser | null>;
     deleteUser(id: string): Promise<boolean>;
 }
 export class UserRepository implements IUserRepository {
@@ -30,6 +31,10 @@ export class UserRepository implements IUserRepository {
         const users = await UserModel.find();
         return users;
     }
+    async getUsersByRole(role: string): Promise<IUser[]> {
+        const users = await UserModel.find({ role: role });
+        return users;
+    }
     async updateUser(id: string, updateData: Partial<IUser>): Promise<IUser | null> {
         const updatedUser = await UserModel.findByIdAndUpdate(
             id, updateData, { new: true } 
@@ -40,4 +45,11 @@ export class UserRepository implements IUserRepository {
         const result = await UserModel.findByIdAndDelete(id);
         return result ? true : false;
     }
+    async updateUserByAdmin(id: string, updateData: Partial<IUser>): Promise<IUser | null> {
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            id, updateData, { new: true } 
+        );
+        return updatedUser;
+    }
+
 }
