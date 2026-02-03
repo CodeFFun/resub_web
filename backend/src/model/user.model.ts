@@ -10,15 +10,14 @@ const UserSchema: Schema = new Schema<UserType>(
         phoneNumber: { type: String },
         dateOfBirth: { type: String },
         alternateEmail: { type: String, email: true },
-        gender: { type: String, enum: ['male', 'female', 'other'] },
         role: {
             type: String,
-            enum: ['customer', 'shop'],
+            enum: ['customer', 'shop', 'admin'],
             default: 'customer',
         }
     },
     {
-        timestamps: true, // auto createdAt and updatedAt
+        timestamps: true,
     }
 );
 
