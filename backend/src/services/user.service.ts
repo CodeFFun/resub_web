@@ -1,4 +1,4 @@
-import { CreateUserDTO, LoginUserDTO } from "../dtos/user.dto";
+import { CreateUserDTO, LoginUserDTO, RoleDTO, UpdateUserDTO } from "../dtos/user.dto";
 import { UserRepository } from "../repositories/user.repository";
 import  bcryptjs from "bcryptjs"
 import { HttpError } from "../errors/http-error";
@@ -17,7 +17,7 @@ export class UserService {
         if(usernameCheck){
             throw new HttpError(403, "Username already in use");
         }
-        const hashedPassword = await bcryptjs.hash(data.password, 10); // 10 - complexity
+        const hashedPassword = await bcryptjs.hash(data.password, 10);
         data.password = hashedPassword;
         const newUser = await userRepository.createUser(data);
         return newUser;
@@ -40,5 +40,68 @@ export class UserService {
         }
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' }); 
         return { token, user }
+    }
+
+    async getUserProfile(userId: string){
+        const user = await userRepository.getUserById(userId);
+        if(!user){
+            throw new HttpError(404, "User not found");
+        }
+        return user;
+    }
+
+    async getAllUsers(){
+        const users = await userRepository.getAllUsers();
+        return users;
+    }
+
+    async getUsersByRole(role: string){
+        const users = await userRepository.getUsersByRole(role);
+        return users;
+    }
+
+    async updateUser(userId: string, updateData: Partial<UpdateUserDTO>){
+        if(updateData.password){
+            const hashedPassword = await bcryptjs.hash(updateData.password, 10);
+            updateData.password = hashedPassword;
+        }
+        const updatedUser = await userRepository.updateUser(userId, updateData);
+        if(!updatedUser){
+            throw new HttpError(404, "User not found");
+        }
+        return updatedUser;
+    }
+
+    async updateUserByEmail(email: string, updateData: Partial<RoleDTO>){
+        const user = await userRepository.getUserByEmail(email);
+        if(!user){
+            throw new HttpError(404, "User not found");
+        }
+        let userId = String(user._id);
+        const updatedUser = await userRepository.updateUser(userId , updateData);
+        if(!updatedUser){
+            throw new HttpError(404, "User not found");
+        }
+        return updatedUser;
+    }
+
+    async getUserById(userId: string){
+        const user = await userRepository.getUserById(userId);
+        if(!user){
+            throw new HttpError(404, "User not found");
+        }
+        return user;
+    }
+
+    async updateUserByAdmin(userId: string, updateData: Partial<UpdateUserDTO>){
+        if(updateData.password){
+            const hashedPassword = await bcryptjs.hash(updateData.password, 10);
+            updateData.password = hashedPassword;
+        }
+        const updatedUser = await userRepository.updateUserByAdmin(userId, updateData);
+        if(!updatedUser){
+            throw new HttpError(404, "User not found");
+        }
+        return updatedUser;
     }
 }
