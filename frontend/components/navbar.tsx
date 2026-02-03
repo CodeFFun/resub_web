@@ -57,7 +57,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Profile */}
-                <Link href="/profile" className="hover:text-gray-600">
+                <Link href="/customer/profile" className="hover:text-gray-600">
                   <User size={24} className="text-black" />
                 </Link>
               </div>

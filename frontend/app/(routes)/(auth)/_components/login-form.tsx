@@ -29,8 +29,10 @@ export function LoginForm() {
       })
       const res = await handleLogin(validatedData)
       if (res.success) {
-        toast("Login successful!")
-        router.push("/auth/dashboard")
+        toast.success("Login successful!")
+        router.push("/login")
+      }else{
+        toast.error(res.message || "Login failed. Please try again.")
       }
     } catch (error) {
       if (error instanceof ZodError) {
@@ -40,7 +42,7 @@ export function LoginForm() {
           fieldErrors[field] = err.message 
         })
         setErrors(fieldErrors)
-        toast("Please fix the errors in the form.")
+        toast.error("Please fix the errors in the form.")
       }
     } finally {
       setIsLoading(false)

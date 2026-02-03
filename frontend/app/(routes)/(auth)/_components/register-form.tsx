@@ -14,6 +14,7 @@ export function RegisterForm() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [userType, setUserType] = useState<"customer" | "shop">("customer")
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Partial<RegisterInput>>({})
   const router = useRouter()
@@ -103,6 +104,34 @@ export function RegisterForm() {
           required
         />
         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium">I am a:</span>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => setUserType("customer")}
+            className={`px-4 py-2 rounded-md transition-colors ${
+              userType === "customer"
+                ? "bg-[#3d3d1f] text-white"
+                : "bg-muted text-foreground hover:bg-muted/80"
+            }`}
+          >
+            Customer
+          </button>
+          <button
+            type="button"
+            onClick={() => setUserType("shop")}
+            className={`px-4 py-2 rounded-md transition-colors ${
+              userType === "shop"
+                ? "bg-[#3d3d1f] text-white"
+                : "bg-muted text-foreground hover:bg-muted/80"
+            }`}
+          >
+            Shopkeeper
+          </button>
+        </div>
       </div>
 
       <div className="space-y-3 pt-4">

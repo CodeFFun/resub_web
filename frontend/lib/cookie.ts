@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 export const setAuthToken = async (token: string) => {
     const cookieStore = await cookies();
-    cookieStore.set({name: "auth_token", value: token});
+    cookieStore.set({name: "auth_token", value: token, maxAge: 60 * 60 * 24 * 30}); // 30 days
 }
 export const getAuthToken = async () => {
     const cookieStore = await cookies();
@@ -14,7 +14,8 @@ export const setUserData = async (userData: any) => {
     cookieStore.set(
         {
             name: "user_data", 
-            value: JSON.stringify(userData) // convert object to string
+            value: JSON.stringify(userData),
+            maxAge: 60 * 60 * 24 * 30 // 30 days
         } 
     );
 }
