@@ -117,8 +117,8 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
             <div className="w-24 h-24 bg-gray-300 rounded-full shrink-0">
               {profileData.profilePictureUrl && (
                 <Image
-                unoptimized
-                  src={`${BASE_URL}${profileData.profilePictureUrl}`}
+                  unoptimized
+                  src={profileData.profilePictureUrl.startsWith("blob:") ? profileData.profilePictureUrl : `${BASE_URL}${profileData.profilePictureUrl}`}
                   alt="Profile"
                   className="w-24 h-24 rounded-full object-cover overflow-hidden"
                     width={0}

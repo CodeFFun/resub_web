@@ -48,8 +48,8 @@ export function MainContent({user}:{user: any}) {
   const handleRevertChanges = () => {
     setProfileData({
       username: user?.username || "",
-        firstName: user?.fullname.split(" ")[0] || "",
-        lastName: user?.fullname.split(" ")[1] || "",
+        firstName: user?.fullname?.split(" ")[0] || "",
+        lastName: user?.fullname?.split(" ")[1] || "",
         alternateEmail: user?.alternateEmail || "",
         phoneNumber: user?.phoneNumber || "",
         profilePictureUrl: user?.profilePictureUrl || "",
@@ -131,15 +131,12 @@ export function MainContent({user}:{user: any}) {
               {profileData.profilePictureUrl && (
                 <Image
                 unoptimized
-                  src={`${BASE_URL}${profileData.profilePictureUrl}`}
+                  src={profileData.profilePictureUrl.startsWith("blob:") ? profileData.profilePictureUrl : `${BASE_URL}${profileData.profilePictureUrl}`}
                   alt="Profile"
                   className="w-24 h-24 rounded-full object-cover overflow-hidden"
                     width={0}
                     height={0}
                 />
-            //   ) : (
-            //     <div className="w-24 h-24 bg-gray-300 rounded-full shrink-0" />
-            //   )
               )}
             </div>
             <div>
