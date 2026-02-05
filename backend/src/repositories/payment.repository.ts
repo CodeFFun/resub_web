@@ -3,8 +3,8 @@ import { IPayment, PaymentModel } from "../model/payment.model";
 export interface IPaymentRepository {
     createPayment(paymentData: Partial<IPayment>): Promise<IPayment>;
     getPaymentById(id: string): Promise<IPayment | null>;
-    getPaymentsByStatus(status: string): Promise<IPayment[]>;
-    getPaymentsByProvider(provider: string): Promise<IPayment[]>;
+    getPaymentsByStatus(orderId:string, status: string): Promise<IPayment[]>;
+    getPaymentsByProvider(orderId:string, provider: string): Promise<IPayment[]>;
     getPaymentsByOrderId(orderId: string): Promise<IPayment[]>; 
     updatePayment(id: string, updateData: Partial<IPayment>): Promise<IPayment | null>;
     deletePayment(id: string): Promise<boolean>;
@@ -29,13 +29,13 @@ export class PaymentRepository implements IPaymentRepository {
         return payments;
     }
 
-    async getPaymentsByStatus(status: string): Promise<IPayment[]> {
-        const payments = await PaymentModel.find({ status: status });
+    async getPaymentsByStatus(orderId:string, status: string): Promise<IPayment[]> {
+        const payments = await PaymentModel.find({ orderId: orderId, status: status });
         return payments;
     }
 
-    async getPaymentsByProvider(provider: string): Promise<IPayment[]> {
-        const payments = await PaymentModel.find({ provider: provider });
+    async getPaymentsByProvider(orderId:string, provider: string): Promise<IPayment[]> {
+        const payments = await PaymentModel.find({ orderId: orderId, provider: provider });
         return payments;
     }
 

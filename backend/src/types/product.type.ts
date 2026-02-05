@@ -10,8 +10,6 @@ export const ProductSchema = z.object({
     description: z.string().optional(),
     base_price: z.number().positive(),
     stock_quantity: z.number().int().nonnegative(),
-    mfd_date: z.date().or(z.string()).optional(),
-    exp_date: z.date().or(z.string()).optional(),
     shopId: objectIdSchema.optional(),
 });
 

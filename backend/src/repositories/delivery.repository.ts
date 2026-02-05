@@ -3,9 +3,9 @@ import { IDelivery, DeliveryModel } from "../model/delivery.model";
 export interface IDeliveryRepository {
     getDeliveryById(id: string): Promise<IDelivery | null>;
     createDelivery(deliveryData: Partial<IDelivery>): Promise<IDelivery>;
-    getAllDeliveries(): Promise<IDelivery[]>;
-    getAllDeliveriesByStatus(status: string): Promise<IDelivery[]>;
-    getAllDeliveriesByCourierName(courierName: string): Promise<IDelivery[]>;
+    getAllDeliveriesByOrder(orderId:string): Promise<IDelivery[]>;
+    getAllDeliveriesByStatus(orderId:string, status: string): Promise<IDelivery[]>;
+    getAllDeliveriesByCourierName(orderId:string,courierName: string): Promise<IDelivery[]>;
     updateDelivery(id: string, updateData: Partial<IDelivery>): Promise<IDelivery | null>;
     deleteDelivery(id: string): Promise<boolean>;
 }
@@ -17,14 +17,14 @@ export class DeliveryRepository implements IDeliveryRepository {
     async createDelivery(deliveryData: Partial<IDelivery>): Promise<IDelivery> {
         return await DeliveryModel.create(deliveryData);
     }
-    async getAllDeliveries(): Promise<IDelivery[]> {
-        return await DeliveryModel.find();
+    async getAllDeliveriesByOrder(orderId:string): Promise<IDelivery[]> {
+        return await DeliveryModel.find({orderId});
     }
-    async getAllDeliveriesByStatus(status: string): Promise<IDelivery[]> {
-        return await DeliveryModel.find({ status });
+    async getAllDeliveriesByStatus(orderId:string, status: string): Promise<IDelivery[]> {
+        return await DeliveryModel.find({ orderId, status });
     }
-    async getAllDeliveriesByCourierName(courierName: string): Promise<IDelivery[]> {
-        return await DeliveryModel.find({ courier_name: courierName });
+    async getAllDeliveriesByCourierName(orderId:string,courierName: string): Promise<IDelivery[]> {
+        return await DeliveryModel.find({ orderId, courier_name: courierName });
     }
     async updateDelivery(id: string, updateData: Partial<IDelivery>): Promise<IDelivery | null> {
         return await DeliveryModel.findByIdAndUpdate({ _id: id, orderId: updateData.orderId }, updateData, { new: true });

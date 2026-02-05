@@ -4,7 +4,7 @@ export interface ISubscriptionPlanRepository {
     createSubscriptionPlan(subscriptionPlanData: Partial<ISubscriptionPlan>): Promise<ISubscriptionPlan>;
     getSubscriptionPlanById(id: string): Promise<ISubscriptionPlan | null>;
     getSubscriptionPlansByShopId(shopId: string): Promise<ISubscriptionPlan[]>;
-    getActiveSubscriptionPlansByShop(shopId: string): Promise<ISubscriptionPlan[]>;
+    getActiveSubscriptionPlansByActiveStatus(shopId: string, active:boolean): Promise<ISubscriptionPlan[]>;
     updateSubscriptionPlan(id: string, shopId: string,updateData: Partial<ISubscriptionPlan>): Promise<ISubscriptionPlan | null>;
     deleteSubscriptionPlan(id: string): Promise<boolean>;
 }
@@ -26,8 +26,8 @@ export class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
         return subscriptionPlans;
     }
 
-    async getActiveSubscriptionPlansByShop(shopId: string): Promise<ISubscriptionPlan[]> {
-        const subscriptionPlans = await SubscriptionPlanModel.find({ shopId: shopId, active: true });
+    async getActiveSubscriptionPlansByActiveStatus(shopId: string, active: boolean): Promise<ISubscriptionPlan[]> {
+        const subscriptionPlans = await SubscriptionPlanModel.find({ shopId: shopId, active: active });
         return subscriptionPlans;
     }
 

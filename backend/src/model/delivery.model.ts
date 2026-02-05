@@ -3,15 +3,16 @@ import { DeliveryType } from "../types/delivery.type";
 
 const DeliverySchema: Schema = new Schema<DeliveryType>(
     {
-        status: { type: String, required: true },
+        status: { type: String, required: true, default: "pending" },
         courier_name: { type: String, required: true },
-        tracking_id: { type: String, required: true, unique: true },
+        tracking_id: { type: String, unique: true },
         picked_at: { type: Date },
         delivered_at: { type: Date },
         orderId: { type: mongoose.Types.ObjectId, required: true, ref: "Order" },
     },
     {
         timestamps: true,
+        
     }
 );
 

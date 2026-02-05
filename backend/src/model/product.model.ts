@@ -7,8 +7,6 @@ const ProductSchema: Schema = new Schema<ProductType>(
         description: { type: String },
         base_price: { type: Number, required: true, min: 0 },
         stock_quantity: { type: Number, required: true, min: 0, default: 0 },
-        mfd_date: { type: Date },
-        exp_date: { type: Date },
         shopId: { type: Schema.Types.ObjectId, ref: "Shop", required: true },
     },
     {

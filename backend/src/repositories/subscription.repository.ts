@@ -3,9 +3,8 @@ import { ISubscription, SubscriptionModel } from "../model/subscription.model";
 export interface ISubscriptionRepository {
     createSubscription(subscriptionData: Partial<ISubscription>): Promise<ISubscription>;
     getSubscriptionById(id: string): Promise<ISubscription | null>;
-    getAllSubscriptions(): Promise<ISubscription[]>;
-    getSubscriptionsByUserId(userId: string): Promise<ISubscription[]>;
-    getSubscriptionsByStatus(status: string): Promise<ISubscription[]>;
+    getAllSubscriptionsOfAUser(userId:string): Promise<ISubscription[]>;
+    getSubscriptionsByStatus(userId:string, status: string): Promise<ISubscription[]>;
     updateSubscription(id: string, updateData: Partial<ISubscription>): Promise<ISubscription | null>;
     deleteSubscription(id: string): Promise<boolean>;
 }
@@ -21,18 +20,13 @@ export class SubscriptionRepository implements ISubscriptionRepository {
         return subscription;
     }
 
-    async getAllSubscriptions(): Promise<ISubscription[]> {
-        const subscriptions = await SubscriptionModel.find();
+    async getAllSubscriptionsOfAUser(userId:string): Promise<ISubscription[]> {
+        const subscriptions = await SubscriptionModel.find({userId:userId});
         return subscriptions;
     }
 
-    async getSubscriptionsByUserId(userId: string): Promise<ISubscription[]> {
-        const subscriptions = await SubscriptionModel.find({ userId: userId });
-        return subscriptions;
-    }
-
-    async getSubscriptionsByStatus(status: string): Promise<ISubscription[]> {
-        const subscriptions = await SubscriptionModel.find({ status: status });
+    async getSubscriptionsByStatus(userId:string, status: string): Promise<ISubscription[]> {
+        const subscriptions = await SubscriptionModel.find({ userId: userId, status: status });
         return subscriptions;
     }
 

@@ -3,11 +3,12 @@ import { SubscriptionPlanType } from "../types/subscription-plan.type";
 
 const SubscriptionPlanSchema: Schema = new Schema<SubscriptionPlanType>(
     {
-        frequency: { type: String, required: true },
+        frequency: { type: Number, required: true },
         interval_value: { type: Number, required: true, min: 1 },
         price_per_cycle: { type: Number, required: true, min: 0 },
-        active: { type: Boolean, default: true },
-        shopId: { type: Schema.Types.ObjectId, ref: "Shop", required: true },
+        active: { type: Boolean, default: false },
+        productId: [{ type: Schema.Types.ObjectId, ref: "Product", default: [] }],
+        shopId: { type: Schema.Types.ObjectId, ref: "Shop"},
     },
     {
         timestamps: true,
