@@ -10,17 +10,17 @@ export interface IShopRepository {
 
 export class ShopRepository implements IShopRepository {
     async getShopById(id: string): Promise<IShop | null> {
-        return await ShopModel.findById(id);
+        return await ShopModel.findById(id).populate("addressId").populate("categoryId");
     }
     async createShop(shopData: Partial<IShop>): Promise<IShop> {
         const shop = new ShopModel(shopData);
         return await shop.save();
     }
     async getAllShopsOfAUser(userId: string): Promise<IShop[]> {
-        return await ShopModel.find({ userId });
+        return await ShopModel.find({ userId }).populate("addressId").populate("categoryId");
     }
     async updateShop(id: string, userId: string, updateData: Partial<IShop>): Promise<IShop | null> {
-        return await ShopModel.findByIdAndUpdate({ _id: id, userId }, updateData, { new: true });
+        return await ShopModel.findByIdAndUpdate({ _id: id, userId }, updateData, { new: true }).populate("addressId").populate("categoryId");
     }
     async deleteShop(id: string): Promise<boolean> {
         return await ShopModel.findByIdAndDelete(id).then(result => result ? true : false);

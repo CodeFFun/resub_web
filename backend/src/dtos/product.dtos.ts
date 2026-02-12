@@ -7,6 +7,9 @@ export const CreateProductDTO = ProductSchema.pick(
         base_price: true,
         stock_quantity: true,
         shopId: true,
+        description: true,
+        discount: true,
+        categoryId: true,
     }
 )
 

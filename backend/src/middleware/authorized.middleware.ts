@@ -19,7 +19,6 @@ export const authorizedMiddleware =
     async (req: Request, res: Response, next: NextFunction) => {
         try{
             const authHeader = req.headers.authorization;
-            console.log("Auth Header:", authHeader);
             if(!authHeader || !authHeader.startsWith("Bearer "))
                 throw new HttpError(401, "Unauthorized Token Malformed");
             const token = authHeader.split(" ")[1];
@@ -28,10 +27,11 @@ export const authorizedMiddleware =
             if(!decoded || !decoded.id) throw new HttpError(401, "Unauthorized Token Invalid");
             const user = await userRepository.getUserById(decoded.id);
             if(!user) throw new HttpError(401, "Unauthorized: User Not Found");
-            
             req.user = user; 
             return next();
         }catch(error: Error | any){
+            console.error('AUTHORIZED MIDDLEWARE ERROR:', error.message);
+            console.error('Error stack:', error.stack);
             return res.status(error.statusCode ?? 500).json(
                 { success: false, message: error.message || "Internal Server Error" }
             );   
@@ -49,6 +49,7 @@ export const shopOnlyMiddleware =
             }
             return next();
         }catch(error: Error | any){
+            console.error('SHOP ONLY MIDDLEWARE ERROR:', error.message);
             return res.status(error.statusCode ?? 500).json(
                 { success: false, message: error.message || "Internal Server Error" }
             );   
@@ -62,7 +63,7 @@ export const adminOnlyMiddleware =
                 throw new HttpError(401, "Unauthorized User Not Found");
             }
             if(req.user.role !== 'admin'){
-                throw new HttpError(403, "Forbidden For Shopkeepers Only");
+                throw new HttpError(403, "Forbidden For Admin Only");
             }
             return next();
         }catch(error: Error | any){

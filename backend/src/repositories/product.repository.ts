@@ -21,7 +21,7 @@ export class ProductRepository implements IProductRepository {
     }
 
     async getProductsByShopId(shopId: string): Promise<IProduct[]> {
-        const products = await ProductModel.find({ shopId: shopId });
+        const products = await ProductModel.find({ shopId: shopId }).populate("categoryId");
         return products;
     }
 

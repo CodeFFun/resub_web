@@ -17,6 +17,7 @@ export class ProductController{
             }
             const parseedData = CreateProductDTO.safeParse(req.body);
             if(!parseedData.success){
+                console.log(z.prettifyError(parseedData.error))
                 return res.status(400).json(
                     { success: false, message: z.prettifyError(parseedData.error) }
                 );

@@ -47,6 +47,13 @@ export class ShopController {
                     { success: false, message: "User ID not found in request" }
                 );
             }
+            let {accepts_subscription} = req.body;
+            if(accepts_subscription === 'true' || accepts_subscription === true){
+                accepts_subscription = true;
+            }else{
+                accepts_subscription = false;
+            }
+            req.body.accepts_subscription = accepts_subscription;
             const parsedData = CreateShopDTO.safeParse(req.body);
             if (!parsedData.success) {
                 return res.status(400).json(
@@ -54,7 +61,7 @@ export class ShopController {
                 );
             }
             if(req.file){
-                parsedData.data.shop_banner = req.file.path;
+                parsedData.data.shop_banner = `/uploads/${req.file.filename}`;;
             }
             parsedData.data.userId = userId;
             const newShop = await shopService.createShop(parsedData.data);
@@ -62,6 +69,7 @@ export class ShopController {
                 { success: true, message: "Shop created", data: newShop }
             );
         } catch (error: Error | any) {
+            console.error('CREATE SHOP ERROR:', error);
             return res.status(error.statusCode ?? 500).json(
                 { success: false, message: error.message || "Internal Server Error" }
             );
@@ -77,14 +85,22 @@ export class ShopController {
                     { success: false, message: "User ID not found in request" }
                 );
             }
+            let {accepts_subscription} = req.body;
+            if(accepts_subscription === 'true' || accepts_subscription === true){
+                accepts_subscription = true;
+            }else{
+                accepts_subscription = false;
+            }
+            req.body.accepts_subscription = accepts_subscription;
             const parsedData = UpdateShopDTO.safeParse(req.body);
             if (!parsedData.success) {
+                console.log(z.prettifyError(parsedData.error))
                 return res.status(400).json(
                     { success: false, message: z.prettifyError(parsedData.error) }
                 );
             }
             if(req.file){
-                parsedData.data.shop_banner = req.file.path;
+                parsedData.data.shop_banner = `/uploads/${req.file.filename}`;;
             }
             const updatedShop = await shopService.updateShop(shopId, userId, parsedData.data);
             return res.status(200).json(
