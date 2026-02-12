@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 
 export default function Navbar() {
   const pathname = usePathname()
+  console.log(pathname.split("/")[1])
 
   const isAuthPage =
     pathname.startsWith("/(auth)") ||
@@ -17,14 +18,12 @@ export default function Navbar() {
     <nav className="border-b border-gray-200 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-8">
-          {/* Logo */}
           <Link href="/" className="shrink-0">
             <span className="text-2xl font-bold text-black">ReSub</span>
           </Link>
 
           {!isAuthPage && (
             <>
-              {/* Search Bar */}
               <div className="flex-1 max-w-md mx-auto">
                 <div className="relative flex items-center">
                   <input
@@ -38,9 +37,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Right Icons */}
               <div className="flex items-center gap-6">
-                {/* Wishlist */}
                 <Link href="/wishlist" className="relative hover:text-gray-600">
                   <Heart size={24} className="text-black" />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -48,16 +45,13 @@ export default function Navbar() {
                   </span>
                 </Link>
 
-                {/* Cart */}
                 <Link href="/cart" className="relative hover:text-gray-600">
                   <ShoppingCart size={24} className="text-black" />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     2
                   </span>
                 </Link>
-
-                {/* Profile */}
-                <Link href="/customer/profile" className="hover:text-gray-600">
+                <Link href={`/${pathname.split("/")[1]}/profile`} className="hover:text-gray-600">
                   <User size={24} className="text-black" />
                 </Link>
               </div>

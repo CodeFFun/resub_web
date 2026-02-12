@@ -1,5 +1,9 @@
+import CustomerHome from "../_components/customer-home";
+
 export default function DashboardPage(){
     return(
-        <div>Dashboard Page</div>
+        <div>
+            <CustomerHome />
+        </div>
     )
 }

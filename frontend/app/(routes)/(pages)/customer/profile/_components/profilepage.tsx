@@ -9,7 +9,7 @@ import Image from "next/image"
 import { toast } from "sonner"
 import { handleUpdateUser } from "@/lib/actions/user-action"
 
-export function MainContent({user}:{user: any}) {
+export function Profile({user}:{user: any}) {
   const [profilePicture, setProfilePicture] = useState<File | null>(null)
 
   const [profileData, setProfileData] = useState({
@@ -130,7 +130,8 @@ export function MainContent({user}:{user: any}) {
             <div className="w-24 h-24 bg-gray-300 rounded-full shrink-0">
               {profileData.profilePictureUrl && (
                 <Image
-                unoptimized
+                  unoptimized
+                  loader={({ src }) => src}
                   src={profileData.profilePictureUrl.startsWith("blob:") ? profileData.profilePictureUrl : `${BASE_URL}${profileData.profilePictureUrl}`}
                   alt="Profile"
                   className="w-24 h-24 rounded-full object-cover overflow-hidden"

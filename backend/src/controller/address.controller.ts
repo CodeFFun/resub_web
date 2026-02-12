@@ -14,7 +14,6 @@ export class AddressController {
                     { success: false, message: "Unauthorized" }
                 );
             }
-            console.log(req.body);
             const parsedData = CreateAddressDTO.safeParse(req.body); 
             if (!parsedData.success) { 
                 return res.status(400).json(

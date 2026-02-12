@@ -7,7 +7,9 @@ const ProductSchema: Schema = new Schema<ProductType>(
         description: { type: String },
         base_price: { type: Number, required: true, min: 0 },
         stock_quantity: { type: Number, required: true, min: 0, default: 0 },
+        discount: { type: Number, min: 0, max: 100, default:0 },
         shopId: { type: Schema.Types.ObjectId, ref: "Shop", required: true },
+        categoryId: [{ type: Schema.Types.ObjectId, ref: "ProductCategory" }],
     },
     {
         timestamps: true,
