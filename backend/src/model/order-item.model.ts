@@ -5,7 +5,6 @@ const OrderItemSchema: Schema = new Schema<OrderItemType>(
     {
         quantity: { type: Number, required: true, min: 1 },
         unit_price: { type: Number, required: true, min: 0 },
-        line_total: { type: Number, required: true, min: 0 },
         productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
     },
     {

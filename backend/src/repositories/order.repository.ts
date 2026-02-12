@@ -5,6 +5,7 @@ export interface IOrderRepository {
     getOrderById(id: string): Promise<IOrder | null>;
     getOrdersByUserId(userId: string): Promise<IOrder[]>;
     getOrdersByShopId(shopId: string): Promise<IOrder[]>;
+    getOrdersBySubscriptionId(subscriptionId: string): Promise<IOrder[]>;
     updateOrder(id: string, updateData: Partial<IOrder>): Promise<IOrder | null>;
     deleteOrder(id: string): Promise<boolean>;
 }
@@ -27,6 +28,11 @@ export class OrderRepository implements IOrderRepository {
 
     async getOrdersByShopId(shopId: string): Promise<IOrder[]> {
         const orders = await OrderModel.find({ shopId: shopId });
+        return orders;
+    }
+
+    async getOrdersBySubscriptionId(subscriptionId: string): Promise<IOrder[]> {
+        const orders = await OrderModel.find({ subscriptionId: subscriptionId });
         return orders;
     }
 

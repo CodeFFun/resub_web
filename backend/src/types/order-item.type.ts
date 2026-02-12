@@ -8,7 +8,6 @@ const objectIdSchema = z.string().refine((val) => mongoose.Types.ObjectId.isVali
 export const OrderItemSchema = z.object({
     quantity: z.number().int().positive(),
     unit_price: z.number().positive(),
-    line_total: z.number().positive(),
     productId: objectIdSchema.optional(),
 });
 

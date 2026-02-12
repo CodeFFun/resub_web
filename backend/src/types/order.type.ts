@@ -13,7 +13,7 @@ export const OrderSchema = z.object({
     subscriptionId: objectIdSchema.optional(),
     userId: objectIdSchema,
     shopId: objectIdSchema.optional(),
-    orderItemsId: objectIdSchema.array(),
+    orderItemsId: objectIdSchema.array().optional(),
 });
 
 export type OrderType = z.infer<typeof OrderSchema>;

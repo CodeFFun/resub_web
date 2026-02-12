@@ -27,7 +27,7 @@ export const authorizedMiddleware =
             const decoded = jwt.verify(token, JWT_SECRET) as Record<string, any>;
             if(!decoded || !decoded.id) throw new HttpError(401, "Unauthorized Token Invalid");
             const user = await userRepository.getUserById(decoded.id);
-            if(!user) throw new HttpError(401, "Unauthorized User Not Found");
+            if(!user) throw new HttpError(401, "Unauthorized: User Not Found");
             
             req.user = user; 
             return next();

@@ -4,7 +4,7 @@ export interface IProductRepository {
     createProduct(productData: Partial<IProduct>): Promise<IProduct>;
     getProductById(id: string): Promise<IProduct | null>;
     getProductsByShopId(shopId: string): Promise<IProduct[]>;
-    getProductByName(name: string): Promise<IProduct | null>;
+    getProductByName(shopId:string, name: string): Promise<IProduct | null>;
     updateProduct(id: string, updateData: Partial<IProduct>): Promise<IProduct | null>;
     deleteProduct(id: string): Promise<boolean>;
 }
@@ -25,8 +25,8 @@ export class ProductRepository implements IProductRepository {
         return products;
     }
 
-    async getProductByName(name: string): Promise<IProduct | null> {
-        const product = await ProductModel.findOne({ name: name });
+    async getProductByName(shopId:string, name: string): Promise<IProduct | null> {
+        const product = await ProductModel.findOne({ shopId:shopId,name: name });
         return product;
     }
 
