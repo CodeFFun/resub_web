@@ -63,6 +63,24 @@ export class ProductCategoryController {
         }
     }
 
+    async getAllProductCategoriesByShopId(req: Request, res: Response) {
+        try {            
+            const shopId = req.params.shopId as string;
+            const categories = await productCategoryService.getAllProductCategoriesByShopId(shopId);
+            return res.status(200).json({
+                success: true,
+                message: "Product categories retrieved",
+                data: categories
+            });
+        }
+        catch (error: Error | any) {
+            return res.status(error.statusCode ?? 500).json({
+                success: false,
+                message: error.message || "Internal Server Error"
+            });
+        }
+    }
+
     async updateProductCategory(req: Request, res: Response) {
         try {
             const categoryId = req.params.id;

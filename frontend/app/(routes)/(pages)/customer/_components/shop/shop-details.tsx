@@ -1,124 +1,177 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { MapPin } from 'lucide-react'
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MapPin, Heart, ShoppingCart } from "lucide-react";
+import { useParams } from "next/navigation";
+import { handleGetShopsById } from "@/lib/actions/shop-action";
+import { BASE_URL } from "@/lib/api/axios";
+import { handleGetProductsByShopId } from "@/lib/actions/product-action";
+import { handleGetAllProductCategoriesOfAShop } from "@/lib/actions/product-category-action";
+import { handleCreateOrderItem } from "@/lib/actions/order-item-action";
+import { handleCreateOrder } from "@/lib/actions/order-action";
+import { toast } from "sonner";
+import { handleCreateSubscriptionPlan } from "@/lib/actions/subscrition-plan-action";
+import { handleCreateSubscription } from "@/lib/actions/subscription-action";
 
-interface ShopDetailsProps {
-  id: string
-}
+type SHOP = {
+  _id: string;
+  name: string;
+  about: string;
+  shop_banner: string;
+  addressId: {
+    _id: string;
+    city: string;
+    line1: string;
+  };
+  categoryId: {
+    _id: string;
+    name: string;
+  };
+  accepts_subscription: boolean;
+};
 
-// Mock shop data
-const SHOPS_DATA: { [key: string]: any } = {
-  '1': {
-    id: '1',
-    name: 'Fire And Ice Pizzeria',
-    banner: '/placeholder.svg?height=400&width=1200',
-    logo: '/placeholder.svg?height=100&width=100',
-    category: 'Italian',
-    address: 'Thamel',
-    minimumOrder: 0,
-    additionalServiceCharge: 'N/A',
-    additionalVat: 'N/A',
-    description: 'This is firstly opened its doors in January 1995. It immediately became a very popular restaurant among travelers, climbers and local residents as the place to meet for a morning cup of Italian espresso, or later on in the day to share stories and travel tales with friends whilst savoring delicious Pizza, Pastas, Organic Salads, Deserts and even a Grappa after Dinner.',
-    branches: [
-      {
-        id: '1-1',
-        name: 'Fire And Ice Pizzeria - Sanepa',
-        image: '/placeholder.svg?height=200&width=300',
-        address: 'Sanepa Marg, International Club Surendra Bhawan - 40',
-      },
-      {
-        id: '1-2',
-        name: 'Fire And Ice Pizzeria - Thamel',
-        image: '/placeholder.svg?height=200&width=300',
-        address: 'Thamel Marg, Kathmandu',
-      },
-      {
-        id: '1-3',
-        name: 'Fire And Ice Pizzeria - Boudha',
-        image: '/placeholder.svg?height=200&width=300',
-        address: 'Boudha Circle, Kathmandu',
-      },
-    ],
-    products: [
-      {
-        id: 'p1',
-        name: 'L\'Americana',
-        category: 'Pizza',
-        image: '/placeholder.svg?height=200&width=200',
-        price: 1320,
-      },
-      {
-        id: 'p2',
-        name: 'Margherita Pizza',
-        category: 'Pizza',
-        image: '/placeholder.svg?height=200&width=200',
-        price: 890,
-      },
-      {
-        id: 'p3',
-        name: 'Signature Pizza',
-        category: 'Pizza',
-        image: '/placeholder.svg?height=200&width=200',
-        price: 1100,
-      },
-      {
-        id: 'p4',
-        name: 'Garlic Bread',
-        category: 'Sides',
-        image: '/placeholder.svg?height=200&width=200',
-        price: 250,
-      },
-      {
-        id: 'p5',
-        name: 'Caesar Salad',
-        category: 'Salads',
-        image: '/placeholder.svg?height=200&width=200',
-        price: 450,
-      },
-      {
-        id: 'p6',
-        name: 'Tiramisu',
-        category: 'Desserts',
-        image: '/placeholder.svg?height=200&width=200',
-        price: 350,
-      },
-    ],
-  },
-}
+type PRODUCT = {
+  _id: string;
+  name: string;
+  base_price: number;
+  image: string;
+  stock_quantity: number;
+  discount: number;
+};
 
-export default function ShopDetail({ id }: ShopDetailsProps) {
-  const [activeTab, setActiveTab] = useState('products')
-  const shop = SHOPS_DATA[id]
+export default function ShopDetail() {
+  const [activeTab, setActiveTab] = useState("products");
+  const id = useParams().id as string;
+  const [shop, setShop] = useState<SHOP | null>(null);
+  const [categories, setCategories] = useState<{ _id: string; name: string }[]>(
+    [],
+  );
+  const [products, setProducts] = useState<PRODUCT[]>([]);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await handleGetAllProductCategoriesOfAShop(id);
+      if (res.success) {
+        setCategories(res.data);
+      } else {
+        console.error("Failed to fetch categories:", res.message);
+      }
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  };
+
+  const fetchProducts = async () => {
+    const res = await handleGetProductsByShopId(id);
+    console.log(res.data);
+    if (res.success) {
+      setProducts(res.data);
+    } else {
+      console.error("Failed to fetch products:", res.message);
+    }
+  };
+
+  const fetchShopDetails = async () => {
+    try {
+      const res = await handleGetShopsById(id);
+      if (res.success) {
+        setShop(res.data);
+      } else {
+        console.error("Failed to fetch shop details:", res.message);
+      }
+    } catch (err) {
+      console.error("Error fetching shop details:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchShopDetails();
+    fetchProducts();
+    fetchCategories();
+  }, [id]);
 
   if (!shop) {
     return (
       <div className="flex items-center justify-center h-screen">
         <p className="text-xl text-gray-600">Shop not found</p>
       </div>
-    )
+    );
   }
 
-  const categories = [...new Set(shop.products.map((p: any) => p.category))]
+  const addOrder = async (product: PRODUCT) => {
+    const price =
+      product.base_price - product.base_price * (product.discount / 100);
+    const orderItem = {
+      quantity: 1,
+      unit_price: price,
+      productId: product._id,
+    };
+    try {
+      const orderItemRes = await handleCreateOrderItem(orderItem);
+      if (orderItemRes.success) {
+        const data = orderItemRes.data;
+        const order = {
+          orderItemsId: [data._id],
+        };
+        const orderRes = await handleCreateOrder(shop._id, order);
+        if (orderRes.success) {
+          toast.success("Product added to cart");
+        }
+      } else {
+        console.error("Failed to create order item:", orderItemRes.message);
+      }
+    } catch (err: Error | any) {
+      toast.error("Error adding product to cart");
+      console.error("Error creating order item:", err.message || err);
+    }
+  };
 
+  const addSubs = async (product: PRODUCT) => {
+    const subPlan = {
+      productId: [product._id],
+      active: false,
+      price_per_cycle: parseInt((product.base_price - product.base_price * (product.discount / 100)).toFixed(2)),
+      frequency: 7,
+      quantity: 1,
+    }
+    try{
+      const res = await handleCreateSubscriptionPlan(subPlan);
+      console.log(res)
+      if(res.success){
+        const data = res.data;
+        const subs = {
+          start_date: new Date(),
+          remaining_cycle: 1,
+          subscription_planId: data._id,
+        }
+        const subRes = await handleCreateSubscription(shop._id, subs);
+        if(subRes.success){
+          toast.success("Product added to subscription");
+        } else {
+          console.error("Failed to create subscription:", subRes.message); 
+      }
+    }
+    }catch(err:Error | any){
+      console.error(err.message || err);
+    }
+  }
   return (
     <div className="w-full min-h-screen bg-white">
-      {/* Hero Image Section */}
       <div className="relative w-full h-96">
         <Image
-          src={shop.banner || '/placeholder.svg'}
+          unoptimized
+          src={BASE_URL + shop.shop_banner}
           alt={shop.name}
           fill
           className="object-cover"
         />
-
-        {/* Shop Info Overlay */}
         <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-8">
           <div className="flex items-end gap-6">
             <Image
-              src={shop.logo || '/placeholder.svg'}
+              unoptimized
+              src={BASE_URL + shop.shop_banner || "/placeholder.svg"}
               alt={shop.name}
               width={80}
               height={80}
@@ -127,29 +180,25 @@ export default function ShopDetail({ id }: ShopDetailsProps) {
             <div className="text-white">
               <h1 className="text-3xl font-bold mb-2">{shop.name}</h1>
               <p className="text-sm mb-1 flex items-center gap-1">
-                <span className="text-yellow-400">●</span> {shop.category}
+                <span className="text-yellow-400">●</span>{" "}
+                {shop.categoryId?.name}
               </p>
               <p className="text-sm flex items-center gap-2">
-                <MapPin className="w-4 h-4" /> {shop.address}
+                <MapPin className="w-4 h-4" /> {shop.addressId?.line1},{" "}
+                {shop.addressId?.city}
               </p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Tabs Section */}
       <div className="max-w-6xl mx-auto">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="w-full rounded-none border-b border-gray-200 bg-white">
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="about">About</TabsTrigger>
-            <TabsTrigger value="branches">Other Branches</TabsTrigger>
           </TabsList>
-
-          {/* Products Tab */}
           <TabsContent value="products" className="p-8">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Categories Sidebar */}
               <div className="lg:col-span-1">
                 <h3 className="text-sm font-semibold text-green-600 mb-4">
                   Categories
@@ -157,41 +206,42 @@ export default function ShopDetail({ id }: ShopDetailsProps) {
                 <div className="space-y-2">
                   {categories.map((category) => (
                     <button
-                      key={category}
+                      key={category._id}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded transition-colors"
                     >
-                      {category}
+                      {category.name}
                     </button>
                   ))}
                 </div>
               </div>
-
-              {/* Products Grid */}
               <div className="lg:col-span-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {shop.products.map((product: any) => (
+                <div className="grid grid-cols-1 gap-6 align-center align-middle">
+                  {products.map((product: PRODUCT) => (
                     <div
-                      key={product.id}
+                      key={product._id}
                       className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
                     >
-                      <div className="relative h-48 bg-gray-100">
-                        <Image
-                          src={product.image || '/placeholder.svg'}
-                          alt={product.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <p className="text-xs text-gray-500 mb-1">
-                          {product.category}
-                        </p>
-                        <h4 className="text-sm font-medium text-gray-900 mb-2">
+                      <div className="p-4 w-full grid grid-cols-3 h-full place-items-start gap-45">
+                        <h4 className="text-lg font-medium text-gray-900 mb-2">
                           {product.name}
                         </h4>
-                        <p className="text-lg font-semibold text-green-600">
-                          Rs. {product.price}
+                        <p className="text-lg font-semibold text-green-400">
+                          Rs.{" "}
+                          {Math.abs(
+                            product.base_price -
+                              product.base_price * (product.discount / 100),
+                          ).toFixed(2)}
                         </p>
+                        <div>
+                          <Heart
+                            className={`${shop.accepts_subscription === true ? "" : "hidden"}  w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer`}
+                            onClick={() => addSubs(product)}
+                          />
+                          <ShoppingCart
+                            className="w-5 h-5 text-gray-400 hover:text-blue-500 cursor-pointer ml-4"
+                            onClick={() => addOrder(product)}
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -199,53 +249,18 @@ export default function ShopDetail({ id }: ShopDetailsProps) {
               </div>
             </div>
           </TabsContent>
-
-          {/* About Tab */}
           <TabsContent value="about" className="p-8">
             <div className="max-w-3xl">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 {shop.name}
               </h2>
               <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                {shop.description}
+                {shop.about || "No description available for this shop."}
               </p>
-            </div>
-          </TabsContent>
-
-          {/* Other Branches Tab */}
-          <TabsContent value="branches" className="p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">
-              Other Branches of this member.
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {shop.branches.map((branch: any) => (
-                <div
-                  key={branch.id}
-                  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <div className="relative h-48 bg-gray-100">
-                    <Image
-                      src={branch.image || '/placeholder.svg'}
-                      alt={branch.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-2">
-                      {branch.name}
-                    </h3>
-                    <p className="text-xs text-gray-600 flex items-start gap-2">
-                      <MapPin className="w-3 h-3 mt-0.5 shrink-0" />
-                      <span>{branch.address}</span>
-                    </p>
-                  </div>
-                </div>
-              ))}
             </div>
           </TabsContent>
         </Tabs>
       </div>
     </div>
-  )
+  );
 }

@@ -7,9 +7,13 @@ export const CreateSubscriptionDTO = SubscriptionSchema.pick(
         remaining_cycle: true,
         userId: true,
         paymentId: true,
-        shopId: true
+        shopId: true,
+        subscription_planId: true,
     }
-)
+).partial({
+    paymentId: true,
+    userId: true,
+})
 
 export type CreateSubscriptionDTO = z.infer<typeof CreateSubscriptionDTO>
 

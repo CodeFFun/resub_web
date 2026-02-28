@@ -25,6 +25,12 @@ export class ShopService {
         const newShop = await shopRepository.createShop(shopData);
         return newShop;
     }
+
+    async getAllShops() {
+        const shops = await shopRepository.getAllShops();
+        return shops;
+    }
+    
     async updateShop(id: string, userId: string, updateData: Partial<UpdateShopDTO>) {
         if(!id){
             throw new HttpError(400, "Shop ID not found");

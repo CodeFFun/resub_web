@@ -1,4 +1,4 @@
-import { createShop, deleteShop, getAllShopsOfAUser, getShopsById, updateShop } from "../api/shop";
+import { createShop, deleteShop, getAllShopsOfAUser, getShopsById, updateShop, getAllShops } from "../api/shop";
 
 export const handleCreateShop = async (formData: FormData) => {
     try {
@@ -43,6 +43,22 @@ export const handleGetAllShopsOfAUser = async () => {
         return { success: false, message: res.message || "Shop fetching failed" };
     } catch (err: Error | any) {
         return { success: false, message: err.message || "Shop fetching failed" };
+    }
+}
+
+export const handleGetAllShops = async () => {
+    try {
+        const res = await getAllShops();
+        if (res.success) {
+            return {
+                success: true,
+                data: res.data,
+                message: "Shops fetched successfully"
+            };
+        }
+        return { success: false, message: res.message || "Shops fetching failed" };
+    } catch (err: Error | any) {
+        return { success: false, message: err.message || "Shops fetching failed" };
     }
 }
 export const handleUpdateShop = async (id:string,formData: FormData) => {

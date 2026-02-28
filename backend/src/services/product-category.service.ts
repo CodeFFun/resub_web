@@ -26,6 +26,14 @@ export class ProductCategoryService {
         return categories;
     }
 
+    async getAllProductCategoriesByShopId(shopId: string) {
+        if (!shopId) {
+            throw new HttpError(400, "Shop ID is required");
+        }
+        const categories = await productCategoryRepository.getAllProductCategoriesByShopId(shopId);
+        return categories;
+    }
+
     async updateProductCategory(id: string, updateData: UpdateProductCategoryDTO) {
         if (!id) {
             throw new HttpError(400, "Category ID is required");

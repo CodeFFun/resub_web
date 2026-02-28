@@ -38,14 +38,14 @@ export default function Navbar() {
               </div>
 
               <div className="flex items-center gap-6">
-                <Link href="/wishlist" className="relative hover:text-gray-600">
+                <Link href="/customer/subscription" className="relative hover:text-gray-600">
                   <Heart size={24} className="text-black" />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     4
                   </span>
                 </Link>
 
-                <Link href="/cart" className="relative hover:text-gray-600">
+                <Link href="/customer/cart" className="relative hover:text-gray-600">
                   <ShoppingCart size={24} className="text-black" />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     2

@@ -7,12 +7,11 @@ const objectIdSchema = z.string().refine((val) => mongoose.Types.ObjectId.isVali
 
 export const SubscriptionPlanSchema = z.object({
     frequency: z.number().min(1),
-    interval_value: z.number().int().positive(),
     price_per_cycle: z.number().positive(),
     active: z.boolean().default(true),
+    quantity: z.number().min(1).optional(),
     created_at: z.date().or(z.string()).optional(),
     productId: objectIdSchema.array().optional(),
-    shopId: objectIdSchema.optional(),
 });
 
 export type SubscriptionPlanType = z.infer<typeof SubscriptionPlanSchema>;

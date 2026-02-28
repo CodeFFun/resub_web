@@ -17,22 +17,22 @@ export class OrderRepository implements IOrderRepository {
     }
 
     async getOrderById(id: string): Promise<IOrder | null> {
-        const order = await OrderModel.findById(id);
+        const order = await OrderModel.findById(id).populate({path: 'orderItemsId', populate:{path:'productId'}}).populate("subscriptionId").populate("shopId").populate("userId");
         return order;
     }
 
     async getOrdersByUserId(userId: string): Promise<IOrder[]> {
-        const orders = await OrderModel.find({ userId: userId });
+        const orders = await OrderModel.find({ userId: userId }).populate({path: 'orderItemsId', populate:{path:'productId'}}).populate("subscriptionId").populate("shopId").populate("userId");
         return orders;
     }
 
     async getOrdersByShopId(shopId: string): Promise<IOrder[]> {
-        const orders = await OrderModel.find({ shopId: shopId });
+        const orders = await OrderModel.find({ shopId: shopId }).populate({path: 'orderItemsId', populate:{path:'productId'}}).populate("subscriptionId").populate("shopId").populate("userId");
         return orders;
     }
 
     async getOrdersBySubscriptionId(subscriptionId: string): Promise<IOrder[]> {
-        const orders = await OrderModel.find({ subscriptionId: subscriptionId });
+        const orders = await OrderModel.find({ subscriptionId: subscriptionId }).populate({path: 'orderItemsId', populate:{path:'productId'}}).populate("subscriptionId").populate("shopId").populate("userId");
         return orders;
     }
 
@@ -40,7 +40,7 @@ export class OrderRepository implements IOrderRepository {
         const updatedOrder = await OrderModel.findByIdAndUpdate(
             id,
             updateData,
-            { new: true }
+            { new: true, populate: "orderItemsId" }
         );
         return updatedOrder;
     }

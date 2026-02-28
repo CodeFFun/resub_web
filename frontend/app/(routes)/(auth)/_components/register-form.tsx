@@ -14,7 +14,7 @@ export function RegisterForm() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [userType, setUserType] = useState<"customer" | "shop">("customer")
+  const [userType, setUserType] = useState<"customer" | "shop" | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<Partial<RegisterInput>>({})
   const router = useRouter()
@@ -29,7 +29,10 @@ export function RegisterForm() {
         username: name,
         email,
         password,
+        role: userType !== null ? userType : "customer",
       })
+      // console.log(userType)
+      // console.log("Validated Data:", validatedData)
       const res = await handleRegister(validatedData)
       if (res.success) {
         toast("Registration successful!")

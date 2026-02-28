@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoreVertical } from 'lucide-react'
+import { handleGetAllProductCategoriesOfAShop } from '@/lib/actions/product-category-action'
 
 
 export interface Category {
@@ -23,6 +24,8 @@ interface CategoryListProps {
   categories: Category[]
   onDelete: (id: string) => void
   onEdit: (id: string) => void
+  filterShop: string | null
+  onFilterShopChange: (shopId: string) => void
 }
 
 export default function CategoryList({
@@ -30,18 +33,36 @@ export default function CategoryList({
   categories,
   onDelete,
   onEdit,
+  filterShop,
+  onFilterShopChange,
 }: CategoryListProps) {
-  const [filterShop, setFilterShop] = useState<string | null>(null)
+  const [filteredCategories, setFilteredCategories] = useState<Category[] | null>(categories)
 
-  const handleShopFilter = (shopId: string) => {
-    setFilterShop((prev) => (prev === shopId ? null : shopId))
+  const fetchCategoriesByShop = async () => {
+    const res = await handleGetAllProductCategoriesOfAShop(filterShop!)
+    console.log(res)
+    if (res.success) {
+      setFilteredCategories(res.data)
+    }
   }
 
-  const filteredCategories = filterShop === null
-    ? categories
-    : categories.filter((category) =>
-        category.shopId.includes(filterShop)
-      )
+  useEffect(() => {
+    if (filterShop) {
+      fetchCategoriesByShop()
+    } else {
+      setFilteredCategories(null)
+    }
+  }, [filterShop])
+
+  const handleShopFilter = (shopId: string) => {
+    onFilterShopChange(shopId)
+  }
+
+  // const filteredCategories = filterShop === null
+  //   ? categories
+  //   : categories.filter((category) =>
+  //       category.shopId.includes(filterShop)
+  //     )
 
   return (
     <div className="mt-12">
@@ -76,7 +97,7 @@ export default function CategoryList({
         <div className="text-right">Actions</div>
       </div>
       <div className="border-b border-l border-r border-gray-200 divide-y divide-gray-200">
-        {filteredCategories.length === 0 ? (
+        {filteredCategories === null || filteredCategories.length === 0 ? (
           <div className="px-4 py-8 text-center text-gray-500">
             {categories.length === 0
               ? 'No categories yet. Add one to get started.'
