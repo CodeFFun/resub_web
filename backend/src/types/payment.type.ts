@@ -10,7 +10,7 @@ export const PaymentSchema = z.object({
     status: z.string().min(1),
     amount: z.number().positive(),
     paid_at: z.date().or(z.string()).optional(),
-    orderId: objectIdSchema,
+    orderId: objectIdSchema.array().optional(),
 });
 
 export type PaymentType = z.infer<typeof PaymentSchema>;

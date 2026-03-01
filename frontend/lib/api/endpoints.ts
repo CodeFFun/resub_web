@@ -14,5 +14,7 @@ export const API = {
         ORDER: '/order',
         SUBSCRIPTION_PLAN: '/subscription-plan',
         SUBSCRIPTION: '/subscription',
+        PAYMENT:'/payment',
+        DELIVERY:'/delivery',
     }
 }

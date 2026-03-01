@@ -27,6 +27,20 @@ export const getAllSubscriptionOfAUser = async() => {
     });
     return res.data;
 }
+export const getAllSubscriptionOfAShop = async(shopId:string) => {
+    const token = await getAuthToken();
+    if (!token) {
+      throw new Error("User is not authenticated");
+    }
+    const res = await axiosInstance.get(`${API.AUTH.SUBSCRIPTION}/shop/${shopId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
+
+
 
 export const getSubscriptionById = async (id:string) => {
     const token = await getAuthToken();

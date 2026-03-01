@@ -20,7 +20,28 @@ export class PaymentRepository implements IPaymentRepository {
     }
 
     async getPaymentById(id: string): Promise<IPayment | null> {
-        const payment = await PaymentModel.findById(id);
+        const payment = await PaymentModel.findById(id).populate({
+            path: "orderId",
+            model: "Order",
+            populate: [
+                {
+                    path: "orderItemsId",
+                    model: "OrderItem",
+                    populate: {
+                        path: "productId",
+                        model: "Product",
+                    },
+                },
+                {
+                    path: "shopId",
+                    model: "Shop",
+                },
+                {
+                    path: "userId",
+                    model: "User",
+                },
+            ],
+        });
         return payment;
     }
 

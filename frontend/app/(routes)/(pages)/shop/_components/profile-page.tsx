@@ -10,6 +10,8 @@ import ProductForm from "./product_settings/product-form"
 import ProductList from "./product_settings/product-list"
 import Shop from "./shop_settings/shop"
 import CategoryForm from "./category_settings/category-form"
+import SubscriptionsListPage from "./subs_settings/subscription-list-page"
+import OrdersListPage from "./order_settings/order-list-page"
 
 export default function ProfilePage({user}:{user: any}) {
   const [activeTab, setActiveTab] = useState("")
@@ -36,6 +38,8 @@ export default function ProfilePage({user}:{user: any}) {
       {activeTab === "Add Product" && <ProductForm/>}
       {activeTab === "All Products" && <ProductList />}
       {activeTab === "Product Category" && <CategoryForm />}
+      {activeTab === "Active Subs" && <SubscriptionsListPage />}
+      {activeTab === "Orders" && <OrdersListPage />}
     </div>
 
   )

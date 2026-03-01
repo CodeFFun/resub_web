@@ -6,6 +6,7 @@ import { Minus, Plus, Trash2 } from 'lucide-react'
 import { handleDeleteOrder, handleGetOrderByUserId } from '@/lib/actions/order-action'
 import { toast } from 'sonner'
 import { handleUpdateOrderItem } from '@/lib/actions/order-item-action'
+import { handleCreatePayment } from '@/lib/actions/payment-action'
 
 interface CartItem {
   _id: string
@@ -101,6 +102,22 @@ export default function CartPage() {
     const value = sum + (item ? item.orderItemsId[0].unit_price * item.orderItemsId[0].quantity : 0)
     return parseFloat(value.toFixed(2))
   }, 0)
+
+  const handleCheckout =async () => {
+    console.log(Array.from(selectedItems), totalPrice)
+    const payment = {
+      amount: totalPrice,
+      orderId: Array.from(selectedItems)
+    }
+    const res = await handleCreatePayment(payment)
+    if(res.success){
+      toast.success("Payment successful")
+      await Promise.all(Array.from(selectedItems).map(id => handleDeleteOrder(id)))
+      getAllCartitems()
+    } else {
+      toast.error("Payment failed")
+    }
+  }
 
   const groupedByShop = cartItems.reduce(
     (acc, item) => {
@@ -243,7 +260,7 @@ export default function CartPage() {
                   </span>
                 </div>
 
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium" onClick={handleCheckout}>
                   Proceed to Checkout
                 </Button>
 

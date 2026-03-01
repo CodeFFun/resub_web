@@ -3,11 +3,11 @@ import { PaymentType } from "../types/payment.type";
 
 const PaymentSchema: Schema = new Schema<PaymentType>(
     {
-        provider: { type: String },
-        status: { type: String, required: true, default: "pending" },
+        provider: { type: String, default: "esewa" },
+        status: { type: String, required: true, default: "completed" },
         amount: { type: Number, required: true, min: 0 },
         paid_at: { type: Date, default: Date.now() },
-        orderId: { type: mongoose.Types.ObjectId, required: true}
+        orderId: [{ type: mongoose.Types.ObjectId, required: true}]
     },
     {
         timestamps: true,

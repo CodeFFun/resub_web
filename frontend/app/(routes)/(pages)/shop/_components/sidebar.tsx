@@ -14,7 +14,8 @@ import {
   ChevronRight,
   MenuSquareIcon,
   Package,
-  LucideCreativeCommons
+  LucideCreativeCommons,
+  ListCheckIcon
 } from "lucide-react";
 
 // Object structure where key is first sidebar item and values are second sidebar items
@@ -40,9 +41,10 @@ const sidebarItems: Record<
     { label: "Add Product", icon: Pencil },
   ],
   Subscription: [
-    { label: "Choose Plan", icon: CreditCard },
     { label: "Active Subs", icon: User},
-    { label: "Invoices", icon:  MenuSquareIcon},
+  ],
+  Order: [
+    { label: "Orders", icon: User},
   ],
   Setting: [
     { label: "Choose Plan", icon: CreditCard },
@@ -57,6 +59,7 @@ const mainSidebarIcons: Record<string, React.ElementType> = {
   Profile: User,
   Products: Package,
   Subscription: Bookmark,
+  Order: ListCheckIcon,
   Setting: Settings,
 };
 

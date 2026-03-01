@@ -12,7 +12,8 @@ export const CreateOrderDTO = OrderSchema.pick(
 ).partial({
     schedule_for: true,
     subscriptionId: true,
-    userId: true,    
+    userId: true,
+    orderItemsId: true,    
 })
 export type CreateOrderDTO = z.infer<typeof CreateOrderDTO>
 
