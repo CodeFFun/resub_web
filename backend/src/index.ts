@@ -15,6 +15,7 @@ import subscriptionPlanRoutes from './routes/subscription-plan.routes';
 import paymentRoutes from './routes/payment.routes';
 import shopCategoryRoutes from './routes/shop-category.routes';
 import productCategoryRoutes from './routes/product-category.routes';
+import dashboardRoutes from './routes/dashboard.routes';
 
 const app = express();
 const corsOptions = {
@@ -39,6 +40,7 @@ app.use('/delivery', deliveryRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/subscription-plan', subscriptionPlanRoutes);
 app.use('/subscription', subscriptionRoutes);
+app.use('/dashboard', dashboardRoutes);
 
 app.get('/', (req:Request, res:Response) => {
   return res.status(200).json({ sucess: true, message: 'Welcome to the api' });

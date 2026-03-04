@@ -47,12 +47,14 @@ export default function DiscountSection() {
               Shops that automatically restock your favorite products
             </p>
           </div>
+          <Link href="/customer/shop/allshops">
           <Button
             variant="outline"
             className="border-orange-500 text-orange-500 hover:bg-orange-50 bg-transparent"
-          >
+            >
             SHOP ALL PRODUCTS
           </Button>
+          </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
           {subscriptionShops.map((product) => (

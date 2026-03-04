@@ -6,6 +6,8 @@ import { Trash2, Minus, Plus } from 'lucide-react'
 import { handleDeleteSubscription, handleGetAllSubscriptionOfAUser, handleUpdateSubscription } from '@/lib/actions/subscription-action'
 import { handleUpdateSubscriptionPlan } from '@/lib/actions/subscrition-plan-action'
 import { toast } from 'sonner'
+import { handleCreateOrder } from '@/lib/actions/order-action'
+import { handleCreatePayment, handleEsewaPayment } from '@/lib/actions/payment-action'
 
 interface SubscriptionItem {
   _id: string
@@ -35,6 +37,8 @@ export default function SubPage() {
   const [selectAll, setSelectAll] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
+  const isSelectable = (item: SubscriptionItem) => item.status === 'active'
+
   const fetchSubscriptions = async () => {
     
     const res = await handleGetAllSubscriptionOfAUser()
@@ -53,14 +57,21 @@ export default function SubPage() {
   const handleSelectAll = () => {
     const newSelectAll = !selectAll
     setSelectAll(newSelectAll)
+    const selectableIds = subscriptions
+      .filter((item) => isSelectable(item))
+      .map((item) => item._id)
+
     if (newSelectAll) {
-      setSelectedIds(new Set(subscriptions.map((item) => item._id)))
+      setSelectedIds(new Set(selectableIds))
     } else {
       setSelectedIds(new Set())
     }
   }
 
   const handleSelectItem = (id: string) => {
+    const target = subscriptions.find((item) => item._id === id)
+    if (!target || !isSelectable(target)) return
+
     const newSelectedIds = new Set(selectedIds)
     if (newSelectedIds.has(id)) {
       newSelectedIds.delete(id)
@@ -68,8 +79,28 @@ export default function SubPage() {
       newSelectedIds.add(id)
     }
     setSelectedIds(newSelectedIds)
-    setSelectAll(newSelectedIds.size === subscriptions.length && subscriptions.length > 0)
+    const selectableCount = subscriptions.filter((item) => isSelectable(item)).length
+    setSelectAll(newSelectedIds.size === selectableCount && selectableCount > 0)
   }
+
+  useEffect(() => {
+    const selectableIds = new Set(
+      subscriptions.filter((item) => isSelectable(item)).map((item) => item._id)
+    )
+
+    const sanitizedSelected = new Set(
+      [...selectedIds].filter((id) => selectableIds.has(id))
+    )
+
+    const hasSelectionChanged = sanitizedSelected.size !== selectedIds.size
+    if (hasSelectionChanged) {
+      setSelectedIds(sanitizedSelected)
+    }
+
+    setSelectAll(
+      selectableIds.size > 0 && sanitizedSelected.size === selectableIds.size
+    )
+  }, [subscriptions])
 
   const handleQuantityChange = async (id: string, change: number) => {
     const currentId = subscriptions.find(item => item._id === id)?.subscription_planId._id
@@ -105,11 +136,6 @@ export default function SubPage() {
 
   const handleStartDateChange = async (id: string, date: string) => {
     const newDate = new Date(date)
-    // setSubscriptions(
-    //   subscriptions.map((item) =>
-    //     item._id === id ? { ...item, start_date: date } : item
-    //   )
-    // )
     const res = await handleUpdateSubscription(id, {
       start_date: newDate
     })
@@ -128,7 +154,6 @@ export default function SubPage() {
   }
 
   const handleRemove = async (id: string) => {
-    // setSubscriptions(subscriptions.filter((item) => item._id !== id))
     const res = await handleDeleteSubscription(id)
     if(res.success){
       toast.success("Subscription removed")
@@ -142,15 +167,45 @@ export default function SubPage() {
   const totalPrice = selectedItems.reduce((sum, item) => sum + item.subscription_planId.price_per_cycle, 0)
   const estimatedTotal = totalPrice * Math.max(...selectedItems.map((item) => item.remaining_cycle), 0)
 
+  const handleCheckout = async () => {
+    const orderResult =await Promise.all(selectedItems.map(item => {
+      return handleCreateOrder(item.shopId._id, {subscriptionId: item._id})
+    }))
+    if(orderResult.every(res => res.success)){
+      const orderIds = orderResult.map(res => res.data._id)
+      const res = await handleEsewaPayment({amount:totalPrice, orderId: orderIds})
+      if(res.success){
+      const { esewaUrl, params } = res.data;
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = esewaUrl;
+      Object.entries(params).forEach(([key, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value as string;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+        toast.success("Payment created successfully")
+        fetchSubscriptions()
+        setSelectedIds(new Set())
+      } else {
+        toast.error("Failed to create payment")
+      }
+    } else {
+      toast.error("Failed to create order")
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">My Subscriptions</h1>
           <p className="text-gray-600 mt-2">Manage your recurring orders</p>
         </div>
-
         {subscriptions.length === 0 ? (
           <div className="bg-white rounded-lg p-12 text-center">
             <p className="text-gray-500 text-lg">No subscriptions yet</p>
@@ -160,23 +215,20 @@ export default function SubPage() {
           </div>
         ) : (
           <div className="grid grid-cols-3 gap-8">
-            {/* Subscriptions List */}
             <div className="col-span-2">
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                {/* Check All */}
                 <div className="p-6 border-b border-gray-200 flex items-center gap-4">
                   <input
                     type="checkbox"
                     checked={selectAll}
                     onChange={handleSelectAll}
-                    className="w-5 h-5 text-blue-600 rounded cursor-pointer"
+                    disabled={subscriptions.filter((item) => isSelectable(item)).length === 0}
+                    className="w-5 h-5 text-blue-600 rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                   />
                   <label className="text-sm font-medium text-gray-700 cursor-pointer">
                     Select All Subscriptions
                   </label>
                 </div>
-
-                {/* Subscription Items */}
                 <div className="divide-y divide-gray-200">
                   {subscriptions.map((subscription) => (
                     <div
@@ -184,15 +236,13 @@ export default function SubPage() {
                       className="p-6 hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex gap-4">
-                        {/* Checkbox */}
                         <input
                           type="checkbox"
                           checked={selectedIds.has(subscription._id)}
                           onChange={() => handleSelectItem(subscription._id)}
-                          className="w-5 h-5 text-blue-600 rounded cursor-pointer mt-1 shrink-0"
+                          disabled={!isSelectable(subscription)}
+                          className="w-5 h-5 text-blue-600 rounded cursor-pointer mt-1 shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
                         />
-
-                        {/* Subscription Details */}
                         <div className="grow">
                           <div className="mb-4">
                             <p className="text-xs text-gray-500 uppercase tracking-wide">
@@ -202,10 +252,7 @@ export default function SubPage() {
                               {subscription.subscription_planId.productId[0].name}
                             </h3>
                           </div>
-
-                          {/* Details Grid */}
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-4">
-                            {/* Quantity */}
                             <div>
                               <label className="text-sm text-gray-600 block mb-2">
                                 Quantity
@@ -259,8 +306,6 @@ export default function SubPage() {
                               </div>
                             </div>
                           </div>
-
-                          {/* Start Date + Status */}
                           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                               <label className="text-sm text-gray-600 block mb-2">
@@ -294,15 +339,11 @@ export default function SubPage() {
                               </select>
                             </div>
                           </div>
-
-                          {/* Product Price Display */}
                           <div className="text-sm text-gray-600">
                             Base Price: Rs.{subscription.subscription_planId.productId[0].base_price} × {subscription.subscription_planId.quantity}{' '}
                             items = Rs.{subscription.subscription_planId.price_per_cycle}/cycle
                           </div>
                         </div>
-
-                        {/* Remove Button */}
                         <button
                           onClick={() => handleRemove(subscription._id)}
                           className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded transition-colors shrink-0"
@@ -315,8 +356,6 @@ export default function SubPage() {
                 </div>
               </div>
             </div>
-
-            {/* Order Summary */}
             <div className="col-span-1">
               <div className="bg-white rounded-lg p-6 sticky top-8 h-fit shadow-sm">
                 <h2 className="text-lg font-bold text-gray-900 mb-6">Summary</h2>
@@ -351,6 +390,7 @@ export default function SubPage() {
 
                 <Button
                   disabled={selectedItems.length === 0}
+                  onClick={handleCheckout}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Continue to Checkout

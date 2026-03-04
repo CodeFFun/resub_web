@@ -78,8 +78,8 @@ export default function OrdersListPage() {
   }
 
   const filteredOrders = filterShop === null
-    ? orders
-    : orders.filter((order) => order.shopId._id === filterShop)
+    ? orders.filter((order) => order.orderItemsId.length > 0)
+    : orders.filter((order) => order.shopId._id === filterShop && order.orderItemsId.length > 0)
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 w-full">

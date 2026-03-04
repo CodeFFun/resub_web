@@ -6,7 +6,7 @@ import { Shop } from '../shop_settings/shop-list'
 import { handleGetAllShopsOfAUser } from '@/lib/actions/shop-action'
 import { handleDeleteSubscription, handleGetAllSubscriptionOfAShop } from '@/lib/actions/subscription-action'
 
-interface Subscription {
+export interface Subscription {
   _id: string
   userId: {
     _id: string

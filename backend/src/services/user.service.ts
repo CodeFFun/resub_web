@@ -78,6 +78,10 @@ export class UserService {
             throw new HttpError(404, "User not found");
         }
         let userId = String(user._id);
+        if(updateData.password){
+            const hashedPassword = await bcryptjs.hash(updateData.password, 10);
+            updateData.password = hashedPassword;
+        }
         const updatedUser = await userRepository.updateUser(userId , updateData);
         if(!updatedUser){
             throw new HttpError(404, "User not found");

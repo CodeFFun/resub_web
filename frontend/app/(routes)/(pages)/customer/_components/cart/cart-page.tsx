@@ -1,134 +1,196 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Minus, Plus, Trash2 } from 'lucide-react'
-import { handleDeleteOrder, handleGetOrderByUserId } from '@/lib/actions/order-action'
-import { toast } from 'sonner'
-import { handleUpdateOrderItem } from '@/lib/actions/order-item-action'
-import { handleCreatePayment } from '@/lib/actions/payment-action'
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import {
+  handleDeleteOrder,
+  handleGetOrderByUserId,
+} from "@/lib/actions/order-action";
+import { toast } from "sonner";
+import { handleUpdateOrderItem } from "@/lib/actions/order-item-action";
+import {
+  handleCreatePayment,
+  handleEsewaPayment,
+} from "@/lib/actions/payment-action";
+import crypto from "crypto";
+import { esewaPayment } from "@/lib/api/payment";
 
-interface CartItem {
-  _id: string
-  orderItemsId:[{
-    _id: string
+export interface CartItem {
+  _id: string;
+  orderItemsId: {
+    _id: string;
     productId: {
-      _id: string
-      name: string
-    }
-    quantity: number
-    unit_price: number
-  }]
-  shopId:{
-    _id: string
-    name: string
-  }
+      _id: string;
+      name: string;
+    };
+    quantity: number;
+    unit_price: number;
+  }[];
+  shopId: {
+    _id: string;
+    name: string;
+  };
 }
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set())
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
 
   const getAllCartitems = async () => {
-    const res = await handleGetOrderByUserId()
-    if(res.success){
-      setCartItems(res.data)
+    const res = await handleGetOrderByUserId();
+    if (res.success) {
+      const filteredCartItems = res.data.filter(
+        (item: CartItem) =>
+          item.orderItemsId?.length > 0 && item.orderItemsId[0]?.productId,
+      );
+      setCartItems(filteredCartItems);
     } else {
-      console.error("Failed to fetch cart items:", res.message)
+      console.error("Failed to fetch cart items:", res.message);
     }
-  }
+  };
 
-    useEffect(() => {
-        getAllCartitems()
-    }, [])
+  useEffect(() => {
+    getAllCartitems();
+  }, []);
 
   const handleToggleItem = (id: string) => {
-    const newSelected = new Set(selectedItems)
+    const newSelected = new Set(selectedItems);
     if (newSelected.has(id)) {
-      newSelected.delete(id)
+      newSelected.delete(id);
     } else {
-      newSelected.add(id)
+      newSelected.add(id);
     }
-    setSelectedItems(newSelected)
-  }
+    setSelectedItems(newSelected);
+  };
 
   const handleCheckAll = (checked: boolean) => {
     if (checked) {
-      setSelectedItems(new Set(cartItems.map((item) => item._id)))
+      setSelectedItems(new Set(cartItems.map((item) => item._id)));
     } else {
-      setSelectedItems(new Set())
+      setSelectedItems(new Set());
     }
-  }
+  };
 
   const handleQuantityChange = async (id: string, newQuantity: number) => {
-    if (newQuantity < 1) return
+    if (newQuantity < 1) return;
     setCartItems((items) => {
       return items.map((item) =>
-        item._id === id 
-          ? { 
-              ...item, 
-              orderItemsId: [{
-                ...item.orderItemsId[0],
-                quantity: newQuantity
-              }]
-            } 
-          : item
-      )
-    })
-    const item = cartItems.find((item) => item._id === id)
-    const res = await handleUpdateOrderItem(item!.orderItemsId[0]._id, { quantity: newQuantity })
-    console.log(res)
-    if(res.success){
-      getAllCartitems()
+        item._id === id
+          ? {
+              ...item,
+              orderItemsId: [
+                {
+                  ...item.orderItemsId[0],
+                  quantity: newQuantity,
+                },
+              ],
+            }
+          : item,
+      );
+    });
+    const item = cartItems.find((item) => item._id === id);
+    if (!item?.orderItemsId?.[0]) return;
+    const res = await handleUpdateOrderItem(item!.orderItemsId[0]._id, {
+      quantity: newQuantity,
+    });
+    if (res.success) {
+      getAllCartitems();
     }
-  }
+  };
 
   const handleRemoveItem = async (id: string) => {
-    console.log(id)
-    const res = await handleDeleteOrder(id)
-    if(res.success){
-      getAllCartitems()
-      toast.success("Item removed from cart")
+    console.log(id);
+    const res = await handleDeleteOrder(id);
+    if (res.success) {
+      getAllCartitems();
+      toast.success("Item removed from cart");
     } else {
-      toast.error("Failed to remove item from cart")
+      toast.error("Failed to remove item from cart");
     }
-  }
+  };
 
-  const isAllChecked = cartItems.length > 0 && selectedItems.size === cartItems.length
-  const isIndeterminate = selectedItems.size > 0 && selectedItems.size < cartItems.length
+  const isAllChecked =
+    cartItems.length > 0 && selectedItems.size === cartItems.length;
+  const isIndeterminate =
+    selectedItems.size > 0 && selectedItems.size < cartItems.length;
 
   const totalPrice = Array.from(selectedItems).reduce((sum, id) => {
-    const item = cartItems.find((i) => i._id === id)
-    const value = sum + (item ? item.orderItemsId[0].unit_price * item.orderItemsId[0].quantity : 0)
-    return parseFloat(value.toFixed(2))
-  }, 0)
+    const item = cartItems.find((i) => i._id === id);
+    const value =
+      sum +
+      (item
+        ? item.orderItemsId[0].unit_price * item.orderItemsId[0].quantity
+        : 0);
+    return parseFloat(value.toFixed(2));
+  }, 0);
 
-  const handleCheckout =async () => {
-    console.log(Array.from(selectedItems), totalPrice)
+  const handleCheckout = async () => {
+    const selectedCartItems = Array.from(selectedItems)
+      .map((id) => cartItems.find((item) => item._id === id))
+      .filter((item): item is CartItem => item !== undefined);
+
+    const totalQuantity = selectedCartItems.reduce(
+      (sum, item) => sum + (item.orderItemsId[0]?.quantity || 0),
+      0,
+    );
+    const totalAmount = selectedCartItems.reduce(
+      (sum, item) =>
+        sum +
+        (item.orderItemsId[0]?.unit_price || 0) *
+          (item.orderItemsId[0]?.quantity || 0),
+      0,
+    );
+    console.log(totalAmount, totalQuantity);
+    console.log("Total Quantity:", totalQuantity);
+    console.log("Total Amount:", totalAmount);
+
+    const selectedCartItemsId = selectedCartItems.map((item) => item._id);
     const payment = {
       amount: totalPrice,
-      orderId: Array.from(selectedItems)
-    }
-    const res = await handleCreatePayment(payment)
-    if(res.success){
-      toast.success("Payment successful")
-      await Promise.all(Array.from(selectedItems).map(id => handleDeleteOrder(id)))
-      getAllCartitems()
+      orderId: selectedCartItemsId,
+    };
+
+    const res = await handleEsewaPayment(payment);
+    console.log(res)
+    if (res.success) {
+      // After receiving the response from POST /payment/esewa/initialize
+      const { esewaUrl, params } = res.data;
+
+      // Create a temporary form
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = esewaUrl;
+
+      // Add all parameters as hidden inputs
+      Object.entries(params).forEach(([key, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value as string;
+        form.appendChild(input);
+      });
+
+      // Add form to page and submit
+      document.body.appendChild(form);
+      form.submit();
+      toast.success("Payment successful");
+      getAllCartitems();
     } else {
-      toast.error("Payment failed")
+      toast.error("Payment failed");
     }
-  }
+  };
 
   const groupedByShop = cartItems.reduce(
     (acc, item) => {
       if (!acc[item.shopId.name]) {
-        acc[item.shopId.name] = []
+        acc[item.shopId.name] = [];
       }
-      acc[item.shopId.name].push(item)
-      return acc
+      acc[item.shopId.name].push(item);
+      return acc;
     },
-    {} as Record<string, CartItem[]>
-  )
+    {} as Record<string, CartItem[]>,
+  );
 
   return (
     <div className="w-full min-h-screen bg-gray-50 p-8">
@@ -148,7 +210,7 @@ export default function CartPage() {
                   checked={isAllChecked}
                   ref={(el) => {
                     if (el) {
-                      el.indeterminate = isIndeterminate
+                      el.indeterminate = isIndeterminate;
                     }
                   }}
                   onChange={(e) => handleCheckAll(e.target.checked)}
@@ -191,7 +253,10 @@ export default function CartPage() {
                         <div className="flex items-center gap-3 bg-gray-100 rounded-lg p-2">
                           <button
                             onClick={() =>
-                              handleQuantityChange(item._id, item.orderItemsId[0].quantity - 1)
+                              handleQuantityChange(
+                                item._id,
+                                item.orderItemsId[0].quantity - 1,
+                              )
                             }
                             className="text-gray-600 hover:text-gray-900 transition-colors p-1"
                           >
@@ -202,7 +267,10 @@ export default function CartPage() {
                           </span>
                           <button
                             onClick={() =>
-                              handleQuantityChange(item._id, item.orderItemsId[0].quantity + 1)
+                              handleQuantityChange(
+                                item._id,
+                                item.orderItemsId[0].quantity + 1,
+                              )
                             }
                             className="text-gray-600 hover:text-gray-900 transition-colors p-1"
                           >
@@ -211,7 +279,11 @@ export default function CartPage() {
                         </div>
                         <div className="w-28 text-right">
                           <p className="font-semibold text-gray-900 text-lg">
-                            Rs.{(item.orderItemsId[0].unit_price * item.orderItemsId[0].quantity).toFixed(2)}
+                            Rs.
+                            {(
+                              item.orderItemsId[0].unit_price *
+                              item.orderItemsId[0].quantity
+                            ).toFixed(2)}
                           </p>
                         </div>
                         <button
@@ -260,7 +332,10 @@ export default function CartPage() {
                   </span>
                 </div>
 
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium" onClick={handleCheckout}>
+                <Button
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium"
+                  onClick={handleCheckout}
+                >
                   Proceed to Checkout
                 </Button>
 
@@ -273,5 +348,5 @@ export default function CartPage() {
         )}
       </div>
     </div>
-  )
+  );
 }

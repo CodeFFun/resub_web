@@ -114,12 +114,17 @@ export default function ShopDetail() {
         const data = orderItemRes.data;
         const order = {
           orderItemsId: [data._id],
+          delivery_type: "standard",
         };
         const orderRes = await handleCreateOrder(shop._id, order);
         if (orderRes.success) {
           toast.success("Product added to cart");
+        } else {
+          toast.error(orderRes.message || "Failed to create order");
+          console.error("Failed to create order:", orderRes.message);
         }
       } else {
+        toast.error(orderItemRes.message || "Failed to create order item");
         console.error("Failed to create order item:", orderItemRes.message);
       }
     } catch (err: Error | any) {
@@ -150,10 +155,15 @@ export default function ShopDetail() {
         if(subRes.success){
           toast.success("Product added to subscription");
         } else {
+          toast.error(subRes.message || "Failed to create subscription");
           console.error("Failed to create subscription:", subRes.message); 
+        }
+      } else {
+        toast.error(res.message || "Failed to create subscription plan");
+        console.error("Failed to create subscription plan:", res.message);
       }
-    }
     }catch(err:Error | any){
+      toast.error("Error adding product to subscription");
       console.error(err.message || err);
     }
   }

@@ -16,5 +16,6 @@ export const API = {
         SUBSCRIPTION: '/subscription',
         PAYMENT:'/payment',
         DELIVERY:'/delivery',
+        DASHBOARD:'/dashboard',
     }
 }

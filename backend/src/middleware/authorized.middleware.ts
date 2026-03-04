@@ -28,7 +28,6 @@ export const authorizedMiddleware =
             const user = await userRepository.getUserById(decoded.id);
             if(!user) throw new HttpError(401, "Unauthorized: User Not Found");
             req.user = user; 
-            console.log(user)
             return next();
         }catch(error: Error | any){
             return res.status(error.statusCode ?? 500).json(

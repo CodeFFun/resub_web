@@ -14,6 +14,7 @@ import {
 import { handleGetAllShops } from "@/lib/actions/shop-action";
 import { BASE_URL } from "@/lib/api/axios";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 type SHOP = {
   _id: string;
@@ -52,7 +53,17 @@ export default function ShopSection() {
   return (
     <section className="w-full bg-white py-12">
       <div className="max-w-7xl mx-auto px-8">
+        <div className="w-full flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-8">All Products</h2>
+        <Link href="/customer/shop/allshops">
+          <Button
+            variant="outline"
+            className="border-orange-500 text-orange-500 hover:bg-orange-50 bg-transparent"
+            >
+            SHOP ALL PRODUCTS
+          </Button>
+          </Link>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
           {currentProducts.map((product) => (
             <div key={product._id} className="group cursor-pointer">

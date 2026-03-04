@@ -15,7 +15,8 @@ import {
   MenuSquareIcon,
   Package,
   LucideCreativeCommons,
-  ListCheckIcon
+  ListCheckIcon,
+  CircleDollarSign
 } from "lucide-react";
 
 // Object structure where key is first sidebar item and values are second sidebar items
@@ -46,6 +47,9 @@ const sidebarItems: Record<
   Order: [
     { label: "Orders", icon: User},
   ],
+  Invoice: [
+    { label: "Invoices", icon: CircleDollarSign},
+  ],
   Setting: [
     { label: "Choose Plan", icon: CreditCard },
     { label: "Password & Security", icon: Lock },
@@ -61,6 +65,7 @@ const mainSidebarIcons: Record<string, React.ElementType> = {
   Subscription: Bookmark,
   Order: ListCheckIcon,
   Setting: Settings,
+  Invoice: CircleDollarSign
 };
 
 interface SidebarProps {
@@ -112,7 +117,6 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
         </nav>
       </div>
 
-      {/* Second Sidebar - Sub Navigation */}
       {subItems.length > 0 && (
         <div className="w-55 border-r border-gray-200 py-6 px-5">
           <nav className="space-y-2 mt-5">
