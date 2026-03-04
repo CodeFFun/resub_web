@@ -112,13 +112,13 @@ export default function AddressForm() {
 
   return (
     <div className="mx-auto px-4 py-8 w-full">
-      <div className="bg-white rounded-lg border border-gray-200 p-8 mb-8">
+      <div className="bg-card rounded-lg border border-border p-8 mb-8">
         <div className="mb-8">
-          <div className="bg-gray-100 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+          <div className="bg-secondary rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-1">
               Address Information
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Add and manage your delivery addresses
             </p>
           </div>
@@ -129,7 +129,7 @@ export default function AddressForm() {
             <div>
               <Label
                 htmlFor="label"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Label
               </Label>
@@ -139,13 +139,13 @@ export default function AddressForm() {
                 placeholder="e.g., Home, Office"
                 value={isUpdate ? editAddress.label : label}
                 onChange={(e) => isUpdate ? setEditAddress({...editAddress, label: e.target.value}) : setLabel(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
             <div>
               <Label
                 htmlFor="country"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Country
               </Label>
@@ -155,13 +155,13 @@ export default function AddressForm() {
                 placeholder="Country name"
                 value={isUpdate ? editAddress.country : country}
                 onChange={(e) => isUpdate ? setEditAddress({...editAddress, country: e.target.value}) : setCountry(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
             <div>
               <Label
                 htmlFor="state"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 State
               </Label>
@@ -171,7 +171,7 @@ export default function AddressForm() {
                 placeholder="State/Province"
                 value={isUpdate ? editAddress.state : state}
                 onChange={(e) => isUpdate ? setEditAddress({...editAddress, state: e.target.value}) : setState(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
           </div>
@@ -179,7 +179,7 @@ export default function AddressForm() {
             <div>
               <Label
                 htmlFor="city"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 City
               </Label>
@@ -189,13 +189,13 @@ export default function AddressForm() {
                 placeholder="City name"
                 value={isUpdate ? editAddress.city : city}
                 onChange={(e) => isUpdate ? setEditAddress({...editAddress, city: e.target.value}) : setCity(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
             <div>
               <Label
                 htmlFor="line1"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Address Line 1
               </Label>
@@ -205,14 +205,14 @@ export default function AddressForm() {
                 placeholder="Full street address"
                 value={isUpdate ? editAddress.line1 : line1}
                 onChange={(e) => isUpdate ? setEditAddress({...editAddress, line1: e.target.value}) : setLine1(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
           </div>
           <div className="pt-6">
             <Button
               type="submit"
-              className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+              className="w-full md:w-auto bg-accent hover:opacity-90 text-accent-foreground font-medium py-2 px-6 rounded-lg transition-colors"
             >
               {isUpdate ? 'Update Address' : 'Add Address'}
             </Button>

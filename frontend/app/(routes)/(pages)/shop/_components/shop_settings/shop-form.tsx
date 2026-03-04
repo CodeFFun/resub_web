@@ -131,14 +131,14 @@ export default function ShopForm() {
  
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 w-full">
+    <div className="min-h-screen bg-background py-12 px-4 w-full">
       <div className="max-w-2xl mx-auto">
         <div className="mb-8">
-          <div className="bg-gray-100 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+          <div className="bg-secondary rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-1">
               Shop Information
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Please complete your shop information
             </p>
           </div>
@@ -147,7 +147,7 @@ export default function ShopForm() {
           <div>
             <Label
               htmlFor="shopName"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Shop Name
             </Label>
@@ -162,7 +162,7 @@ export default function ShopForm() {
           <div>
             <Label
               htmlFor="pickupType"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Pickup Type
             </Label>
@@ -180,12 +180,12 @@ export default function ShopForm() {
           <div className="flex items-center justify-between">
             <Label
               htmlFor="subscription"
-              className="text-sm font-medium text-gray-700"
+              className="text-sm font-medium text-foreground"
             >
               Subscription
             </Label>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-muted-foreground">
                 {subscription ? "Yes" : "No"}
               </span>
               <Switch
@@ -196,10 +196,10 @@ export default function ShopForm() {
             </div>
           </div>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-foreground mb-2">
               Cover Image
             </Label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+            <div className="border-2 border-dashed border-border rounded-lg p-6">
               {coverImage ? (
                 <div className="relative">
                   <Image
@@ -212,7 +212,7 @@ export default function ShopForm() {
                   <button
                     type="button"
                     onClick={handleRemoveImage}
-                    className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                    className="absolute top-2 right-2 bg-destructive text-destructive-foreground p-1 rounded-full hover:opacity-80"
                   >
                     <X size={16} />
                   </button>
@@ -221,7 +221,7 @@ export default function ShopForm() {
                 <label className="cursor-pointer block">
                   <div className="text-center">
                     <svg
-                      className="mx-auto h-12 w-12 text-gray-400"
+                      className="mx-auto h-12 w-12 text-muted-foreground"
                       stroke="currentColor"
                       fill="none"
                       viewBox="0 0 48 48"
@@ -233,13 +233,13 @@ export default function ShopForm() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <p className="mt-2 text-sm text-gray-600">
-                      <span className="font-medium text-blue-600">
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      <span className="font-medium text-accent">
                         Click to upload
                       </span>{" "}
                       or drag and drop
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                       PNG, JPG, GIF up to 10MB
                     </p>
                   </div>
@@ -256,7 +256,7 @@ export default function ShopForm() {
           <div>
             <Label
               htmlFor="address"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Address
             </Label>
@@ -276,7 +276,7 @@ export default function ShopForm() {
             </Select>
           </div>
         <div className="mb-8">
-          <Label className="block text-sm font-medium text-gray-700 mb-2">
+          <Label className="block text-sm font-medium text-foreground mb-2">
             Select Categories
           </Label>
 
@@ -295,7 +295,7 @@ export default function ShopForm() {
                       );
                     })
                   ) : (
-                    <span className="text-gray-500">Select categories</span>
+                    <span className="text-muted-foreground">Select categories</span>
                   )}
                 </div>
 
@@ -308,7 +308,7 @@ export default function ShopForm() {
                 {categories.map((option) => (
                   <label
                     key={option._id}
-                    className="flex items-center gap-2 cursor-pointer rounded px-2 py-1 hover:bg-gray-100"
+                    className="flex items-center gap-2 cursor-pointer rounded px-2 py-1 hover:bg-secondary"
                   >
                     <Checkbox
                       checked={selectedOptions.includes(option._id)}

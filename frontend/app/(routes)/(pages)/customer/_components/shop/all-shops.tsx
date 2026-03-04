@@ -62,10 +62,10 @@ export default function AllShops() {
   return (
     <div className="min-h-screen ">
       {/* Header */}
-      <div className="bg-white ">
+      <div className="bg-card ">
         <div className="max-w-7xl mx-auto px-8 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">All Shops</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-3xl font-bold text-foreground">All Shops</h1>
+          <p className="text-muted-foreground mt-2">
             Browse all available shops and explore their products
           </p>
         </div>
@@ -74,8 +74,8 @@ export default function AllShops() {
         <div className="flex gap-8">
           {/* Left Sidebar - Category Filter */}
           <div className="w-64 shrink-0">
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-card rounded-lg border border-border p-6">
+              <h2 className="text-lg font-semibold text-foreground mb-4">
                 Filter by Category
               </h2>
               <div className="space-y-3">
@@ -88,9 +88,9 @@ export default function AllShops() {
                       type="checkbox"
                       checked={selectedCategory === category._id}
                       onChange={() => handleCategoryToggle(category._id)}
-                      className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                      className="w-4 h-4 text-accent rounded border-border"
                     />
-                    <span className="ml-3 text-sm text-gray-700 group-hover:text-gray-900">
+                    <span className="ml-3 text-sm text-muted-foreground group-hover:text-foreground">
                       {category.name}
                     </span>
                   </label>
@@ -99,7 +99,7 @@ export default function AllShops() {
               {selectedCategory && (
                 <button
                   onClick={() => setSelectedCategory(null)}
-                  className="mt-6 w-full px-4 py-2 text-sm text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                  className="mt-6 w-full px-4 py-2 text-sm text-accent border border-accent rounded-lg hover:bg-accent/10 transition-colors"
                 >
                   Clear Filter
                 </button>
@@ -110,14 +110,14 @@ export default function AllShops() {
           {/* Middle Content - Shop Grid */}
           <div className="flex-1 min-w-0">
             {filteredShops.length === 0 ? (
-              <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-                <p className="text-gray-500 text-lg">
+              <div className="bg-card rounded-lg border border-border p-12 text-center">
+                <p className="text-muted-foreground text-lg">
                   No shops found for the selected category.
                 </p>
               </div>
             ) : (
               <div>
-                <p className="text-sm text-gray-600 mb-6">
+                <p className="text-sm text-muted-foreground mb-6">
                   Showing {filteredShops.length} shop
                   {filteredShops.length !== 1 ? "s" : ""}
                 </p>
@@ -126,9 +126,9 @@ export default function AllShops() {
                     <Link
                       key={shop._id}
                       href={`${shop._id}`}
-                      className="group bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
+                      className="group bg-card rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow"
                     >
-                      <div className="relative h-48 bg-gray-100 overflow-hidden">
+                      <div className="relative h-48 bg-secondary overflow-hidden">
                         <Image
                         unoptimized
                           src={shop.shop_banner ? `${BASE_URL}${shop.shop_banner}` : "/placeholder.svg"}
@@ -140,10 +140,10 @@ export default function AllShops() {
                         />
                       </div>
                       <div className="p-4">
-                        <p className="text-xs text-gray-500 mb-2">
+                        <p className="text-xs text-muted-foreground mb-2">
                           {shop.categoryId.name}
                         </p>
-                        <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600">
+                        <h3 className="text-lg font-semibold text-foreground line-clamp-2 group-hover:text-accent">
                           {shop.name}
                         </h3>
                       </div>

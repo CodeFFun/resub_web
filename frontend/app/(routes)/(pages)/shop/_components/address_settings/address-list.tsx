@@ -35,10 +35,10 @@ export default function AddressList({
 
   return (
     <div className="mt-12">
-      <h2 className="text-xl font-semibold text-gray-900 mb-6">
+      <h2 className="text-xl font-semibold text-foreground mb-6">
         Your Addresses
       </h2>
-      <div className="grid grid-cols-6 gap-6 px-4 py-3 bg-gray-50 border border-gray-200 rounded-t-lg font-semibold text-gray-700 text-sm">
+      <div className="grid grid-cols-6 gap-6 px-4 py-3 bg-secondary border border-border rounded-t-lg font-semibold text-foreground text-sm">
         <div>Label</div>
         <div>Country</div>
         <div>State</div>
@@ -46,26 +46,26 @@ export default function AddressList({
         <div>Full Address Line</div>
         <div className="text-right">Actions</div>
       </div>
-      <div className="border-b border-l border-r border-gray-200 divide-y divide-gray-200">
+      <div className="border-b border-l border-r border-border divide-y divide-border">
         {addresses.map((address) => (
           <div
             key={address._id}
-            className="grid grid-cols-6 gap-6 px-4 py-4 items-center hover:bg-gray-50 transition-colors"
+            className="grid grid-cols-6 gap-6 px-4 py-4 items-center hover:bg-secondary transition-colors"
           >
             <div>
-              <p className="font-medium text-gray-900">{address.label}</p>
+              <p className="font-medium text-foreground">{address.label}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">{address.country}</p>
+              <p className="text-sm text-muted-foreground">{address.country}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">{address.state}</p>
+              <p className="text-sm text-muted-foreground">{address.state}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">{address.city}</p>
+              <p className="text-sm text-muted-foreground">{address.city}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">{address.line1}</p>
+              <p className="text-sm text-muted-foreground">{address.line1}</p>
             </div>
             <div className="flex justify-end">
               <DropdownMenu>
@@ -80,7 +80,7 @@ export default function AddressList({
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => onDelete?.(address._id)}
-                    className="text-red-600"
+                    className="text-destructive"
                   >
                     Delete
                   </DropdownMenuItem>

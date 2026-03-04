@@ -19,7 +19,7 @@ export default async function AdminUsersPage() {
       {res.success && res.data ? (
         <UserTable users={res.data} />
       ) : (
-        <p className="text-red-500">{res.message || "Failed to load users"}</p>
+        <p className="text-destructive">{res.message || "Failed to load users"}</p>
       )}
     </div>
   )

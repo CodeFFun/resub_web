@@ -134,15 +134,15 @@ export default function DashboardPage() {
         fetchData();
     },[])
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-secondary p-8">
       <div className="max-w-7xl mx-auto">
         {!isLoading && !hasShops ? (
           <div className="text-center py-16">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">No Shop Found</h1>
-            <p className="text-lg text-gray-600 mb-8">Please create a shop first to view your dashboard</p>
+            <h1 className="text-4xl font-bold text-foreground mb-4">No Shop Found</h1>
+            <p className="text-lg text-muted-foreground mb-8">Please create a shop first to view your dashboard</p>
             <button
               onClick={() => router.push('/shop/profile')}
-              className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-8 py-3 bg-accent text-accent-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity"
             >
               Create Shop
             </button>
@@ -150,8 +150,8 @@ export default function DashboardPage() {
         ) : !isLoading && hasShops ? (
           <>
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600 mt-2">Welcome back! Heres your shop performance overview.</p>
+          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground mt-2">Welcome back! Heres your shop performance overview.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <KPICard
@@ -180,30 +180,30 @@ export default function DashboardPage() {
           />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-6">Revenue Trend</h2>
+          <div className="lg:col-span-2 bg-card rounded-lg border border-border p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-foreground mb-6">Revenue Trend</h2>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis dataKey="date" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" />
+                <YAxis stroke="hsl(var(--muted-foreground))" />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#FFF', border: '1px solid #E5E7EB', borderRadius: '8px' }}
-                  cursor={{ stroke: '#E5E7EB' }}
+                  contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                  cursor={{ stroke: 'hsl(var(--border))' }}
                 />
                 <Line
                   type="monotone"
                   dataKey="revenue"
-                  stroke="#3B82F6"
+                  stroke="hsl(var(--accent))"
                   strokeWidth={2}
-                  dot={{ fill: '#3B82F6', r: 4 }}
+                  dot={{ fill: 'hsl(var(--accent))', r: 4 }}
                   activeDot={{ r: 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-gray-900 mb-6">Payment Methods</h2>
+          <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-foreground mb-6">Payment Methods</h2>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -219,7 +219,10 @@ export default function DashboardPage() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value:any) => `${value}%`} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                  formatter={(value:any) => `${value}%`}
+                />
               </PieChart>
             </ResponsiveContainer>
             <div className="mt-4 space-y-2">
@@ -227,9 +230,9 @@ export default function DashboardPage() {
                 <div key={method.name} className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: method.color }} />
-                    <span className="text-gray-600">{method.name}</span>
+                    <span className="text-muted-foreground">{method.name}</span>
                   </div>
-                  <span className="font-medium text-gray-900">{method.value}%</span>
+                  <span className="font-medium text-foreground">{method.value}%</span>
                 </div>
               ))}
             </div>
@@ -237,26 +240,26 @@ export default function DashboardPage() {
         </div>
 
         {/* Top Products */}
-        <div className="mt-6 bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">Top Products</h2>
+        <div className="mt-6 bg-card rounded-lg border border-border p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-foreground mb-6">Top Products</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
               data={topProducts}
               layout="vertical"
               margin={{ top: 5, right: 30, left: 200, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-              <XAxis type="number" stroke="#9CA3AF" />
-              <YAxis dataKey="name" type="category" stroke="#9CA3AF" width={190} />
-              <Tooltip contentStyle={{ backgroundColor: '#FFF', border: '1px solid #E5E7EB', borderRadius: '8px' }} />
-              <Bar dataKey="revenue" fill="#10B981" radius={[0, 8, 8, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis type="number" stroke="hsl(var(--muted-foreground))" />
+              <YAxis dataKey="name" type="category" stroke="hsl(var(--muted-foreground))" width={190} />
+              <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }} />
+              <Bar dataKey="revenue" fill="hsl(var(--accent))" radius={[0, 8, 8, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
           </>
         ) : (
           <div className="text-center py-16">
-            <p className="text-gray-600">Loading dashboard...</p>
+            <p className="text-muted-foreground">Loading dashboard...</p>
           </div>
         )}
       </div>

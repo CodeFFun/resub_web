@@ -95,7 +95,7 @@ export function UserCreateForm() {
           type="file"
           accept="image/*"
           onChange={handleFileChange}
-          className="w-full px-4 py-2 border border-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-muted-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
         />
         {formData.profilePicture && (
           <div className="mt-2">
@@ -119,11 +119,11 @@ export function UserCreateForm() {
           value={formData.username}
           onChange={handleInputChange}
           className={`w-full bg-transparent py-3 px-4 placeholder-muted-foreground focus:outline-none transition-colors rounded-md ${
-            errors.username ? "border-2 border-red-500" : "border border-muted-foreground"
+            errors.username ? "border-2 border-destructive" : "border border-muted-foreground"
           }`}
           required
         />
-        {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+        {errors.username && <p className="text-destructive text-sm mt-1">{errors.username}</p>}
       </div>
       <div>
         <label htmlFor="fullname" className="block text-sm font-medium mb-2">
@@ -137,11 +137,11 @@ export function UserCreateForm() {
           value={formData.fullname}
           onChange={handleInputChange}
           className={`w-full bg-transparent py-3 px-4 placeholder-muted-foreground focus:outline-none transition-colors rounded-md ${
-            errors.fullname ? "border-2 border-red-500" : "border border-muted-foreground"
+            errors.fullname ? "border-2 border-destructive" : "border border-muted-foreground"
           }`}
           required
         />
-        {errors.fullname && <p className="text-red-500 text-sm mt-1">{errors.fullname}</p>}
+        {errors.fullname && <p className="text-destructive text-sm mt-1">{errors.fullname}</p>}
       </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium mb-2">
@@ -155,11 +155,11 @@ export function UserCreateForm() {
           value={formData.email}
           onChange={handleInputChange}
           className={`w-full bg-transparent py-3 px-4 placeholder-muted-foreground focus:outline-none transition-colors rounded-md ${
-            errors.email ? "border-2 border-red-500" : "border border-muted-foreground"
+            errors.email ? "border-2 border-destructive" : "border border-muted-foreground"
           }`}
           required
         />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
       </div>
       <div>
         <label htmlFor="alternateEmail" className="block text-sm font-medium mb-2">
@@ -173,10 +173,10 @@ export function UserCreateForm() {
           value={formData.alternateEmail}
           onChange={handleInputChange}
           className={`w-full bg-transparent py-3 px-4 placeholder-muted-foreground focus:outline-none transition-colors rounded-md ${
-            errors.alternateEmail ? "border-2 border-red-500" : "border border-muted-foreground"
+            errors.alternateEmail ? "border-2 border-destructive" : "border border-muted-foreground"
           }`}
         />
-        {errors.alternateEmail && <p className="text-red-500 text-sm mt-1">{errors.alternateEmail}</p>}
+        {errors.alternateEmail && <p className="text-destructive text-sm mt-1">{errors.alternateEmail}</p>}
       </div>
       <div>
         <label htmlFor="password" className="block text-sm font-medium mb-2">
@@ -190,11 +190,11 @@ export function UserCreateForm() {
           value={formData.password}
           onChange={handleInputChange}
           className={`w-full bg-transparent py-3 px-4 placeholder-muted-foreground focus:outline-none transition-colors rounded-md ${
-            errors.password ? "border-2 border-red-500" : "border border-muted-foreground"
+            errors.password ? "border-2 border-destructive" : "border border-muted-foreground"
           }`}
           required
         />
-        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+        {errors.password && <p className="text-destructive text-sm mt-1">{errors.password}</p>}
       </div>
       <div>
         <label htmlFor="phoneNumber" className="block text-sm font-medium mb-2">
@@ -208,11 +208,11 @@ export function UserCreateForm() {
           value={formData.phoneNumber}
           onChange={handleInputChange}
           className={`w-full bg-transparent py-3 px-4 placeholder-muted-foreground focus:outline-none transition-colors rounded-md ${
-            errors.phoneNumber ? "border-2 border-red-500" : "border border-muted-foreground"
+            errors.phoneNumber ? "border-2 border-destructive" : "border border-muted-foreground"
           }`}
           required
         />
-        {errors.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>}
+        {errors.phoneNumber && <p className="text-destructive text-sm mt-1">{errors.phoneNumber}</p>}
       </div>
       <div>
         <label className="block text-sm font-medium mb-2">Role</label>

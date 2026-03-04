@@ -193,18 +193,18 @@ export default function CartPage() {
   );
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 p-8">
+    <div className="w-full min-h-screen bg-secondary p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-8">Shopping Cart</h1>
 
         {cartItems.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">Your cart is empty</p>
+            <p className="text-muted-foreground text-lg">Your cart is empty</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white rounded-lg p-6 border border-gray-200 flex items-center gap-4">
+              <div className="bg-card rounded-lg p-6 border border-border flex items-center gap-4">
                 <input
                   type="checkbox"
                   checked={isAllChecked}
@@ -214,9 +214,9 @@ export default function CartPage() {
                     }
                   }}
                   onChange={(e) => handleCheckAll(e.target.checked)}
-                  className="w-5 h-5 text-blue-600 rounded cursor-pointer"
+                  className="w-5 h-5 text-accent rounded cursor-pointer"
                 />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-foreground">
                   Select All Items
                 </span>
               </div>
@@ -224,33 +224,33 @@ export default function CartPage() {
               {Object.entries(groupedByShop).map(([shopName, items]) => (
                 <div
                   key={shopName}
-                  className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+                  className="bg-card rounded-lg border border-border overflow-hidden"
                 >
-                  <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
-                    <h2 className="font-semibold text-gray-900">{shopName}</h2>
+                  <div className="bg-secondary px-6 py-4 border-b border-border">
+                    <h2 className="font-semibold text-foreground">{shopName}</h2>
                   </div>
 
-                  <div className="divide-y divide-gray-200">
+                  <div className="divide-y divide-border">
                     {items.map((item) => (
                       <div
                         key={item._id}
-                        className="p-6 flex items-center gap-6 hover:bg-gray-50 transition-colors"
+                        className="p-6 flex items-center gap-6 hover:bg-secondary transition-colors"
                       >
                         <input
                           type="checkbox"
                           checked={selectedItems.has(item._id)}
                           onChange={() => handleToggleItem(item._id)}
-                          className="w-5 h-5 text-blue-600 rounded cursor-pointer shrink-0"
+                          className="w-5 h-5 text-accent rounded cursor-pointer shrink-0"
                         />
                         <div className="grow">
-                          <p className="text-sm text-gray-500 mb-1">
+                          <p className="text-sm text-muted-foreground mb-1">
                             {item.shopId.name}
                           </p>
-                          <h3 className="font-medium text-gray-900 text-base">
+                          <h3 className="font-medium text-foreground text-base">
                             {item.orderItemsId[0].productId.name}
                           </h3>
                         </div>
-                        <div className="flex items-center gap-3 bg-gray-100 rounded-lg p-2">
+                        <div className="flex items-center gap-3 bg-secondary rounded-lg p-2">
                           <button
                             onClick={() =>
                               handleQuantityChange(
@@ -258,11 +258,11 @@ export default function CartPage() {
                                 item.orderItemsId[0].quantity - 1,
                               )
                             }
-                            className="text-gray-600 hover:text-gray-900 transition-colors p-1"
+                            className="text-foreground hover:text-accent transition-colors p-1"
                           >
                             <Minus className="w-4 h-4" />
                           </button>
-                          <span className="w-8 text-center font-medium text-gray-900">
+                          <span className="w-8 text-center font-medium text-foreground">
                             {item.orderItemsId[0].quantity}
                           </span>
                           <button
@@ -272,13 +272,13 @@ export default function CartPage() {
                                 item.orderItemsId[0].quantity + 1,
                               )
                             }
-                            className="text-gray-600 hover:text-gray-900 transition-colors p-1"
+                            className="text-foreground hover:text-accent transition-colors p-1"
                           >
                             <Plus className="w-4 h-4" />
                           </button>
                         </div>
                         <div className="w-28 text-right">
-                          <p className="font-semibold text-gray-900 text-lg">
+                          <p className="font-semibold text-foreground text-lg">
                             Rs.
                             {(
                               item.orderItemsId[0].unit_price *
@@ -288,7 +288,7 @@ export default function CartPage() {
                         </div>
                         <button
                           onClick={() => handleRemoveItem(item._id)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 p-2 rounded transition-colors shrink-0"
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded transition-colors shrink-0"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
@@ -299,47 +299,47 @@ export default function CartPage() {
               ))}
             </div>
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg p-6 border border-gray-200 sticky top-8">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              <div className="bg-card rounded-lg p-6 border border-border sticky top-8">
+                <h2 className="text-xl font-semibold text-foreground mb-6">
                   Order Summary
                 </h2>
 
-                <div className="space-y-4 mb-6 pb-6 border-b border-gray-200">
+                <div className="space-y-4 mb-6 pb-6 border-b border-border">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Subtotal</span>
-                    <span className="font-medium text-gray-900">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="font-medium text-foreground">
                       Rs.{totalPrice}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Shipping</span>
-                    <span className="font-medium text-gray-900">Free</span>
+                    <span className="text-muted-foreground">Shipping</span>
+                    <span className="font-medium text-foreground">Free</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Tax</span>
-                    <span className="font-medium text-gray-900">
+                    <span className="text-muted-foreground">Tax</span>
+                    <span className="font-medium text-foreground">
                       Rs.{Math.round(totalPrice * 0.1)}
                     </span>
                   </div>
                 </div>
 
                 <div className="flex justify-between mb-6">
-                  <span className="text-lg font-semibold text-gray-900">
+                  <span className="text-lg font-semibold text-foreground">
                     Total
                   </span>
-                  <span className="text-lg font-bold text-blue-600">
+                  <span className="text-lg font-bold text-accent">
                     Rs.{Math.round(totalPrice * 1.1)}
                   </span>
                 </div>
 
                 <Button
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium"
+                  className="w-full bg-accent hover:opacity-90 text-accent-foreground py-3 rounded-lg font-medium"
                   onClick={handleCheckout}
                 >
                   Proceed to Checkout
                 </Button>
 
-                <p className="text-sm text-gray-500 text-center mt-4">
+                <p className="text-sm text-muted-foreground text-center mt-4">
                   Selected {selectedItems.size} of {cartItems.length} items
                 </p>
               </div>

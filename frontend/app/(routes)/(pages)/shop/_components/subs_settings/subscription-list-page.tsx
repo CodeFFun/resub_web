@@ -83,16 +83,16 @@ export default function SubscriptionsListPage() {
   }
 
   return (
-    <div className="w-full bg-gray-50 min-h-screen p-8">
+    <div className="w-full bg-secondary min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Subscription Orders</h1>
+          <h1 className="text-3xl font-bold text-foreground">Subscription Orders</h1>
         </div>
 
         {/* Shop Filter */}
-        <div className="mb-8 p-6 bg-white rounded-lg border border-gray-200">
-          <div className="text-sm font-medium text-gray-700 mb-4">
+        <div className="mb-8 p-6 bg-card rounded-lg border border-border">
+          <div className="text-sm font-medium text-foreground mb-4">
             Filter by Shop
           </div>
           <div className="grid grid-cols-4 gap-6">
@@ -103,11 +103,11 @@ export default function SubscriptionsListPage() {
                   id={`shop-filter-${shop._id}`}
                   checked={selectedShop === shop._id}
                   onChange={() => handleShopFilter(shop._id)}
-                  className="w-4 h-4 text-blue-600 rounded border-gray-300 cursor-pointer"
+                  className="w-4 h-4 text-accent rounded border-border cursor-pointer"
                 />
                 <label
                   htmlFor={`shop-filter-${shop._id}`}
-                  className="ml-3 text-sm text-gray-700 cursor-pointer"
+                  className="ml-3 text-sm text-foreground cursor-pointer"
                 >
                   {shop.name}
                 </label>
@@ -117,7 +117,7 @@ export default function SubscriptionsListPage() {
           {selectedShop && (
             <button
               onClick={() => setSelectedShop(null)}
-              className="mt-4 text-sm text-blue-600 hover:text-blue-800 underline"
+              className="mt-4 text-sm text-accent hover:opacity-70 underline"
             >
               Clear Filter
             </button>
@@ -125,9 +125,9 @@ export default function SubscriptionsListPage() {
         </div>
 
         {/* Orders Table */}
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="bg-card rounded-lg border border-border overflow-hidden">
           {/* Table Header */}
-          <div className="grid grid-cols-6 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-200 font-semibold text-sm text-gray-700">
+          <div className="grid grid-cols-6 gap-4 px-6 py-4 bg-secondary border-b border-border font-semibold text-sm text-foreground">
 
             <div>Subscription ID</div>
             <div>Product Name</div>
@@ -139,46 +139,46 @@ export default function SubscriptionsListPage() {
 
           {/* Table Body */}
           {filteredOrders.length === 0 ? (
-            <div className="px-6 py-8 text-center text-gray-500">
+            <div className="px-6 py-8 text-center text-muted-foreground">
               No subscription orders found.
             </div>
           ) : (
             filteredOrders.map((order) => (
               <div
                 key={order._id}
-                className="grid grid-cols-6 gap-4 px-6 py-4 border-b border-gray-200 hover:bg-gray-50 transition-colors items-center"
+                className="grid grid-cols-6 gap-4 px-6 py-4 border-b border-border hover:bg-secondary/50 transition-colors items-center"
               >
                 {/* Subscription ID */}
-                <div className="text-sm font-medium text-gray-900">
+                <div className="text-sm font-medium text-foreground">
                   {order._id}
                 </div>
                 {/* Product Name */}
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-muted-foreground">
                   {order.subscription_planId.productId[0].name}
                 </div>
                 {/* Quantity */}
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-muted-foreground">
                   {order.subscription_planId.quantity}
                 </div>
 
                 {/* Price */}
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-muted-foreground">
                   ${order.subscription_planId.price_per_cycle}
                 </div>
 
                 {/* User Name */}
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-muted-foreground">
                   {order.userId.username}
                 </div>
 
                 {/* Delivery Date */}
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700">
+                  <span className="text-sm text-muted-foreground">
                     {new Date(new Date(order.start_date).getTime() + order.subscription_planId.frequency * 24 * 60 * 60 * 1000).toLocaleDateString()}
                   </span>
                   <button
                     onClick={() => handleDeleteOrder(order._id)}
-                    className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded transition-colors"
+                    className="text-destructive hover:opacity-70 hover:bg-destructive/10 p-2 rounded transition-colors"
                     title="Delete order"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -190,7 +190,7 @@ export default function SubscriptionsListPage() {
         </div>
 
         {/* Summary */}
-        <div className="mt-6 text-sm text-gray-600">
+        <div className="mt-6 text-sm text-muted-foreground">
           Showing {filteredOrders.length} of {orders.length} orders
           {selectedShop && ` (filtered by shop)`}
         </div>

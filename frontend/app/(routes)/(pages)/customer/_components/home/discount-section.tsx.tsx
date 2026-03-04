@@ -36,21 +36,21 @@ export default function DiscountSection() {
   }, []);
 
   return (
-    <section className="w-full bg-white py-8">
+    <section className="w-full bg-card py-8">
       <div className="max-w-7xl mx-auto px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            <h2 className="text-3xl font-bold text-foreground mb-2">
               Automatic Restock
             </h2>
-            <p className="text-orange-500 font-semibold">
+            <p className="text-accent font-semibold">
               Shops that automatically restock your favorite products
             </p>
           </div>
           <Link href="/customer/shop/allshops">
           <Button
             variant="outline"
-            className="border-orange-500 text-orange-500 hover:bg-orange-50 bg-transparent"
+            className="border-accent text-accent hover:bg-accent/10 bg-transparent"
             >
             SHOP ALL PRODUCTS
           </Button>
@@ -63,7 +63,7 @@ export default function DiscountSection() {
               href={`/customer/shop/${product._id}`}
               className="group cursor-pointer"
             >
-                <div className="bg-gray-100 rounded-lg p-4 mb-4 h-48 relative shrink-0">
+                <div className="bg-secondary rounded-lg p-4 mb-4 h-48 relative shrink-0">
                   <Image
                     src={BASE_URL + product.shop_banner}
                     unoptimized
@@ -74,10 +74,10 @@ export default function DiscountSection() {
                     className="object-cover rounded-lg"
                   />
                 </div>
-                <p className="text-xs text-gray-500 mb-1">
+                <p className="text-xs text-muted-foreground mb-1">
                   {product.categoryId?.name}
                 </p>
-                <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-3 grow">
+                <h3 className="text-sm font-medium text-foreground line-clamp-2 mb-3 grow">
                   {product.name}
                 </h3>
             </Link>

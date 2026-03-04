@@ -92,7 +92,7 @@ export default function ProductList() {
       ) : (
         <div className="mt-12 px-10 w-full">
           <div className="mb-8">
-            <Label className="block text-sm font-medium text-gray-700 mb-4">
+            <Label className="block text-sm font-medium text-foreground mb-4">
               Select Shops
             </Label>
             <div className="grid grid-cols-4 gap-6">
@@ -103,11 +103,11 @@ export default function ProductList() {
                     id={`shop-${shop._id}`}
                     checked={selectedShops === shop._id}
                     onChange={() => handleShopToggle(shop._id)}
-                    className="w-4 h-4 text-blue-600 rounded border-gray-300 cursor-pointer"
+                    className="w-4 h-4 text-accent rounded border-border cursor-pointer"
                   />
                   <label
                     htmlFor={`shop-${shop._id}`}
-                    className="ml-3 text-sm text-gray-700 cursor-pointer"
+                    className="ml-3 text-sm text-foreground cursor-pointer"
                   >
                     {shop.name}
                   </label>
@@ -115,11 +115,11 @@ export default function ProductList() {
               ))}
             </div>
           </div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">
+          <h2 className="text-xl font-semibold text-foreground mb-6">
             Your Products
           </h2>
 
-          <div className="grid grid-cols-6 gap-8 px-4 py-3 bg-gray-50 border border-gray-200 rounded-t-lg font-semibold text-gray-700 text-sm">
+          <div className="grid grid-cols-6 gap-8 px-4 py-3 bg-secondary border border-border rounded-t-lg font-semibold text-foreground text-sm">
             <div>Product Name</div>
             <div>Product Description</div>
             <div>Base Price</div>
@@ -128,34 +128,34 @@ export default function ProductList() {
             <div className="text-right">Actions</div>
           </div>
 
-          <div className="border-b border-l border-r border-gray-200 divide-y divide-gray-200">
+          <div className="border-b border-l border-r border-border divide-y divide-border">
             {products.map((product) => (
               <div
                 key={product._id}
-                className="grid grid-cols-6 gap-8 px-4 py-4 items-center hover:bg-gray-50 transition-colors"
+                className="grid grid-cols-6 gap-8 px-4 py-4 items-center hover:bg-secondary transition-colors"
               >
                 <div>
-                  <p className="font-medium text-gray-900">{product.name}</p>
+                  <p className="font-medium text-foreground">{product.name}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">
+                  <p className="font-medium text-foreground">
                     {product.description?.split(" ").slice(0, 10).join(" ")}
                     {product.description?.split(" ").length > 10 && "..."}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-muted-foreground">
                     ${product.base_price.toFixed(2)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-muted-foreground">
                     {product.stock_quantity}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-green-600">{product.discount}</p>
+                  <p className="text-sm text-accent">{product.discount}</p>
                 </div>
 
                 {/* Three Dot Menu */}
@@ -172,7 +172,7 @@ export default function ProductList() {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => onDelete(product._id)}
-                        className="text-red-600"
+                        className="text-destructive"
                       >
                         Delete
                       </DropdownMenuItem>

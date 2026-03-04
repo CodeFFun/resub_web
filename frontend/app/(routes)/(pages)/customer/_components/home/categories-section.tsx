@@ -43,9 +43,9 @@ export default function CategoriesSection() {
 
 
   return (
-    <section className="w-full bg-gray-50 py-12">
+    <section className="w-full bg-secondary py-12">
       <div className="max-w-7xl mx-auto px-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">Categories</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-8">Categories</h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5  gap-4">
           {categories.map((category) => (
@@ -53,7 +53,7 @@ export default function CategoriesSection() {
               key={category._id}
               className="flex flex-col items-center text-center cursor-pointer group"
             >
-              <div className="w-full aspect-square bg-white rounded-lg p-4 mb-3 overflow-hidden group-hover:shadow-md transition-shadow">
+              <div className="w-full aspect-square bg-card rounded-lg p-4 mb-3 overflow-hidden group-hover:shadow-md transition-shadow">
                 <Image
                   src={category.image || "/placeholder.svg"}
                   alt={category.name}
@@ -62,7 +62,7 @@ export default function CategoriesSection() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-sm font-medium text-gray-900 line-clamp-2 hover:text-blue-600 transition-colors">
+              <p className="text-sm font-medium text-foreground line-clamp-2 hover:text-accent transition-colors">
                 {category.name}
               </p>
             </div>

@@ -110,11 +110,11 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
     <main className="flex-1 p-8">
       <div className="w-full">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">{`${profileData.username!}'s Profile`}</h1>
+          <h1 className="text-3xl font-bold text-foreground">{`${profileData.username!}'s Profile`}</h1>
         </div>
-        <div className="bg-white rounded-lg p-6 mb-8 border border-gray-200">
+        <div className="bg-card rounded-lg p-6 mb-8 border border-border">
           <div className="flex items-center gap-6">
-            <div className="w-24 h-24 bg-gray-300 rounded-full shrink-0">
+            <div className="w-24 h-24 bg-secondary rounded-full shrink-0">
               {profileData.profilePictureUrl && (
                 <Image
                   unoptimized
@@ -128,7 +128,7 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
             </div>
             <div>
               <div className="flex gap-2">
-                <Button className="bg-gray-800 text-white hover:bg-gray-900" onClick={() => document.getElementById('profilePictureInput')?.click()}>
+                <Button className="bg-foreground text-background hover:opacity-90" onClick={() => document.getElementById('profilePictureInput')?.click()}>
                   <input
                     type="file"
                     id="profilePictureInput"
@@ -138,18 +138,18 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
                   />
                   + Change Image
                 </Button>
-                <Button variant="outline" className="text-gray-700 border-gray-300" onClick={() => setProfileData((prev) => ({ ...prev, profilePictureUrl: "" }))}>
+                <Button variant="outline" className="text-foreground border-border" onClick={() => setProfileData((prev) => ({ ...prev, profilePictureUrl: "" }))}>
                   Remove Image
                 </Button>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-lg p-6 mb-8 border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Personal Information</h2>
+        <div className="bg-card rounded-lg p-6 mb-8 border border-border">
+          <h2 className="text-xl font-semibold text-foreground mb-6">Personal Information</h2>
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 First Name
               </label>
               <input
@@ -157,11 +157,11 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
                 name="firstName"
                 value={profileData.firstName}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 Last Name
               </label>
               <input
@@ -169,15 +169,15 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
                 name="lastName"
                 value={profileData.lastName}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Account Security</h2>
+        <div className="bg-card rounded-lg p-6 border border-border">
+          <h2 className="text-xl font-semibold text-foreground mb-6">Account Security</h2>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-muted-foreground mb-2">
               Alternate Email
             </label>
             <input
@@ -186,11 +186,11 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
               value={profileData.alternateEmail}
               onChange={handleInputChange}
               placeholder="Enter alternate email"
-              className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+              className="w-full px-4 py-2 bg-secondary border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-muted-foreground mb-2">
               Phone Number
             </label>
             <input
@@ -199,13 +199,13 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
               value={profileData.phoneNumber}
               onChange={handleInputChange}
               placeholder="Enter phone number"
-              className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+              className="w-full px-4 py-2 bg-secondary border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
-          <div className="border-t border-gray-200 pt-6">
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Password</h3>
+          <div className="border-t border-border pt-6">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Password</h3>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 New Password
               </label>
               <input
@@ -214,20 +214,20 @@ export function MainContent({user, userId}:{user: any, userId: string}) {
                 value={profileData.newPassword}
                 onChange={handleInputChange}
                 placeholder="••••••••••"
-                className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+                className="w-full px-4 py-2 bg-secondary border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
           </div>
           <div className="flex justify-end gap-3 pt-6">
             <Button
               onClick={handleSaveProfile}
-              className="bg-amber-800 text-white hover:bg-amber-900"
+              className="bg-accent text-accent-foreground hover:opacity-90"
             >
               Save Profile
             </Button>
             <Button
               onClick={handleRevertChanges}
-              className="bg-red-700 text-white hover:bg-red-900"
+              className="bg-destructive text-destructive-foreground hover:opacity-90"
             >
               Revert Changes
             </Button>

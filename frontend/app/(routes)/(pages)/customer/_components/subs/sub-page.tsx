@@ -200,40 +200,40 @@ export default function SubPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-secondary p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Subscriptions</h1>
-          <p className="text-gray-600 mt-2">Manage your recurring orders</p>
+          <h1 className="text-3xl font-bold text-foreground">My Subscriptions</h1>
+          <p className="text-muted-foreground mt-2">Manage your recurring orders</p>
         </div>
         {subscriptions.length === 0 ? (
-          <div className="bg-white rounded-lg p-12 text-center">
-            <p className="text-gray-500 text-lg">No subscriptions yet</p>
-            <Button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white">
+          <div className="bg-card rounded-lg p-12 text-center">
+            <p className="text-muted-foreground text-lg">No subscriptions yet</p>
+            <Button className="mt-4 bg-accent hover:opacity-70 text-accent-foreground">
               Start a Subscription
             </Button>
           </div>
         ) : (
           <div className="grid grid-cols-3 gap-8">
             <div className="col-span-2">
-              <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                <div className="p-6 border-b border-gray-200 flex items-center gap-4">
+              <div className="bg-card rounded-lg overflow-hidden shadow-sm">
+                <div className="p-6 border-b border-border flex items-center gap-4">
                   <input
                     type="checkbox"
                     checked={selectAll}
                     onChange={handleSelectAll}
                     disabled={subscriptions.filter((item) => isSelectable(item)).length === 0}
-                    className="w-5 h-5 text-blue-600 rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-5 h-5 text-accent rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                   />
-                  <label className="text-sm font-medium text-gray-700 cursor-pointer">
+                  <label className="text-sm font-medium text-foreground cursor-pointer">
                     Select All Subscriptions
                   </label>
                 </div>
-                <div className="divide-y divide-gray-200">
+                <div className="divide-y divide-border">
                   {subscriptions.map((subscription) => (
                     <div
                       key={subscription._id}
-                      className="p-6 hover:bg-gray-50 transition-colors"
+                      className="p-6 hover:bg-secondary transition-colors"
                     >
                       <div className="flex gap-4">
                         <input
@@ -241,26 +241,26 @@ export default function SubPage() {
                           checked={selectedIds.has(subscription._id)}
                           onChange={() => handleSelectItem(subscription._id)}
                           disabled={!isSelectable(subscription)}
-                          className="w-5 h-5 text-blue-600 rounded cursor-pointer mt-1 shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
+                          className="w-5 h-5 text-accent rounded cursor-pointer mt-1 shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
                         />
                         <div className="grow">
                           <div className="mb-4">
-                            <p className="text-xs text-gray-500 uppercase tracking-wide">
+                            <p className="text-xs text-muted-foreground uppercase tracking-wide">
                               {subscription.shopId.name}
                             </p>
-                            <h3 className="text-lg font-semibold text-gray-900">
+                            <h3 className="text-lg font-semibold text-foreground">
                               {subscription.subscription_planId.productId[0].name}
                             </h3>
                           </div>
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-4">
                             <div>
-                              <label className="text-sm text-gray-600 block mb-2">
+                              <label className="text-sm text-muted-foreground block mb-2">
                                 Quantity
                               </label>
                               <div className="flex items-center gap-2">
                                 <button
                                   onClick={() => handleQuantityChange(subscription._id, -1)}
-                                  className="p-1 rounded hover:bg-gray-200 transition-colors"
+                                  className="p-1 rounded hover:bg-secondary transition-colors"
                                 >
                                   <Minus className="w-4 h-4" />
                                 </button>
@@ -269,28 +269,28 @@ export default function SubPage() {
                                 </span>
                                 <button
                                   onClick={() => handleQuantityChange(subscription._id, 1)}
-                                  className="p-1 rounded hover:bg-gray-200 transition-colors"
+                                  className="p-1 rounded hover:bg-secondary transition-colors"
                                 >
                                   <Plus className="w-4 h-4" />
                                 </button>
                               </div>
                             </div>
                             <div>
-                              <label className="text-sm text-gray-600 block mb-2">
+                              <label className="text-sm text-muted-foreground block mb-2">
                                 Price per Cycle
                               </label>
-                              <p className="text-lg font-semibold text-gray-900">
+                              <p className="text-lg font-semibold text-foreground">
                                 Rs.{subscription.subscription_planId.price_per_cycle}
                               </p>
                             </div>
                             <div>
-                              <label className="text-sm text-gray-600 block mb-2">
+                              <label className="text-sm text-muted-foreground block mb-2">
                                 Frequency (days)
                               </label>
                               <div className="flex items-center gap-2">
                                 <button
                                   onClick={() => handleFrequencyChange(subscription._id, -1)}
-                                  className="p-1 rounded hover:bg-gray-200 transition-colors"
+                                  className="p-1 rounded hover:bg-secondary transition-colors"
                                 >
                                   <Minus className="w-4 h-4" />
                                 </button>
@@ -299,7 +299,7 @@ export default function SubPage() {
                                 </span>
                                 <button
                                   onClick={() => handleFrequencyChange(subscription._id, 1)}
-                                  className="p-1 rounded hover:bg-gray-200 transition-colors"
+                                  className="p-1 rounded hover:bg-secondary transition-colors"
                                 >
                                   <Plus className="w-4 h-4" />
                                 </button>
@@ -308,7 +308,7 @@ export default function SubPage() {
                           </div>
                           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                              <label className="text-sm text-gray-600 block mb-2">
+                              <label className="text-sm text-muted-foreground block mb-2">
                                 Start Date
                               </label>
                               <input
@@ -317,11 +317,11 @@ export default function SubPage() {
                                 onChange={(e) =>
                                   handleStartDateChange(subscription._id, e.target.value)
                                 }
-                                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                className="px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent w-full"
                               />
                             </div>
                             <div>
-                              <label className="text-sm text-gray-600 block mb-2">
+                              <label className="text-sm text-muted-foreground block mb-2">
                                 Status
                               </label>
                               <select
@@ -329,7 +329,7 @@ export default function SubPage() {
                                 onChange={(e) =>
                                   handleStatusChange(subscription._id, e.target.value as SubscriptionItem['status'])
                                 }
-                                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                className="px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent w-full"
                               >
                                 {['active', 'paused', 'cancelled'].map((status) => (
                                   <option key={status} value={status}>
@@ -339,14 +339,14 @@ export default function SubPage() {
                               </select>
                             </div>
                           </div>
-                          <div className="text-sm text-gray-600">
+                          <div className="text-sm text-muted-foreground">
                             Base Price: Rs.{subscription.subscription_planId.productId[0].base_price} × {subscription.subscription_planId.quantity}{' '}
                             items = Rs.{subscription.subscription_planId.price_per_cycle}/cycle
                           </div>
                         </div>
                         <button
                           onClick={() => handleRemove(subscription._id)}
-                          className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded transition-colors shrink-0"
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10 p-2 rounded transition-colors shrink-0"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
@@ -357,22 +357,22 @@ export default function SubPage() {
               </div>
             </div>
             <div className="col-span-1">
-              <div className="bg-white rounded-lg p-6 sticky top-8 h-fit shadow-sm">
-                <h2 className="text-lg font-bold text-gray-900 mb-6">Summary</h2>
+              <div className="bg-card rounded-lg p-6 sticky top-8 h-fit shadow-sm">
+                <h2 className="text-lg font-bold text-foreground mb-6">Summary</h2>
 
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Subscriptions Selected:</span>
+                    <span className="text-muted-foreground">Subscriptions Selected:</span>
                     <span className="font-semibold">{selectedItems.length}</span>
                   </div>
 
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Price per Cycle:</span>
+                    <span className="text-muted-foreground">Price per Cycle:</span>
                     <span className="font-semibold">Rs.{totalPrice}</span>
                   </div>
 
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Max Occurrences:</span>
+                    <span className="text-muted-foreground">Max Occurrences:</span>
                     <span className="font-semibold">
                       {selectedItems.length > 0
                         ? Math.max(...selectedItems.map((item) => item.remaining_cycle))
@@ -380,9 +380,9 @@ export default function SubPage() {
                     </span>
                   </div>
 
-                  <div className="border-t border-gray-200 pt-4 flex justify-between">
-                    <span className="font-semibold text-gray-900">Estimated Total:</span>
-                    <span className="font-bold text-xl text-blue-600">
+                  <div className="border-t border-border pt-4 flex justify-between">
+                    <span className="font-semibold text-foreground">Estimated Total:</span>
+                    <span className="font-bold text-xl text-accent">
                       Rs.{estimatedTotal}
                     </span>
                   </div>
@@ -391,12 +391,12 @@ export default function SubPage() {
                 <Button
                   disabled={selectedItems.length === 0}
                   onClick={handleCheckout}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-accent hover:opacity-70 text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Continue to Checkout
                 </Button>
 
-                <button className="w-full mt-3 text-blue-600 hover:text-blue-700 font-medium">
+                <button className="w-full mt-3 text-accent hover:opacity-70 font-medium">
                   Continue Shopping
                 </button>
               </div>

@@ -39,12 +39,12 @@ export default function SubTabPage() {
   },[])
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 w-full">
+    <div className="min-h-screen bg-secondary py-8 w-full">
       <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">My Subscription</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-8">My Subscription</h1>
 
-        <div className="bg-white rounded-lg border border-gray-200">
-          <div className="grid grid-cols-5 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-200 font-semibold text-gray-700 text-sm">
+        <div className="bg-card rounded-lg border border-border">
+          <div className="grid grid-cols-5 gap-4 px-6 py-4 bg-secondary border-b border-border font-semibold text-muted-foreground text-sm">
             <div>Product Name</div>
             <div>Delivery Date</div>
             <div>Quantity</div>
@@ -52,9 +52,9 @@ export default function SubTabPage() {
             <div>Shop Name</div>
           </div>
 
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-border">
             {subscriptionPayments.length === 0 ? (
-              <div className="px-6 py-8 text-center text-gray-500">
+              <div className="px-6 py-8 text-center text-muted-foreground">
                 No subscription orders yet
               </div>
             ) : (
@@ -66,21 +66,21 @@ export default function SubTabPage() {
                   .map((order: any, orderIndex: number) => (
                     <div
                       key={`${payment._id}-${order._id || orderIndex}`}
-                      className="grid grid-cols-5 gap-4 px-6 py-4 items-center hover:bg-gray-50 transition-colors"
+                      className="grid grid-cols-5 gap-4 px-6 py-4 items-center hover:bg-secondary/50 transition-colors"
                     >
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-foreground">
                         {order?.subscriptionId?.subscription_planId?.productId?.[0]?.name || 'N/A'}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         {payment.createdAt ? new Date(payment.createdAt).toLocaleDateString() : 'N/A'}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         {order?.subscriptionId?.subscription_planId?.quantity || 'N/A'}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         Rs.{payment.amount}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-muted-foreground">
                         {order?.shopId?.name || 'N/A'}
                       </div>
                     </div>
