@@ -76,6 +76,19 @@ export class ShopController {
         }
     }
 
+    async getAllShops(req: Request, res: Response) {
+        try {
+            const shops = await shopService.getAllShops();
+            return res.status(200).json(
+                { success: true, message: "Shops retrieved", data: shops }
+            );
+        } catch (error: Error | any) {
+            return res.status(error.statusCode ?? 500).json(
+                { success: false, message: error.message || "Internal Server Error" }
+            );
+        }
+    }
+
     async updateShop(req: Request, res: Response) {
         try {
             const shopId = req.params.id;

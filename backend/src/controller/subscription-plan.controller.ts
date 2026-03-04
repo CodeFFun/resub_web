@@ -10,25 +10,7 @@ const subService = new SubscriptionService()
 export class SubscriptionPlanController {
     async createSubscriptionPlan(req: Request, res: Response) {
         try {
-            const shopId = req.body.shopId;
             const productId = req.body.productId;
-            const subId = req.params.subId;
-            if (!shopId) {
-                return res.status(400).json(
-                    { success: false, message: "Shop Id is Required" }
-                );
-            }
-            const sub = await subService.getSubscriptionById(subId);
-            if(!sub){
-                return res.status(404).json(
-                    { success: false, message: "Subscription Not Found" }
-                );
-            }
-            if(!(sub as any)._id.equals(shopId)){
-                return res.status(403).json(
-                    { success: false, message: "Forbidden: You don't have access to create plan for this shop" }
-                );
-            }
             const parsedData = CreateSubscriptionPlanDTO.safeParse(req.body);
             if (!parsedData.success) {
                 return res.status(400).json(
@@ -36,7 +18,7 @@ export class SubscriptionPlanController {
                 );
             }
             const subscriptionPlanData: Partial<CreateSubscriptionPlanDTO> = parsedData.data;
-            const newSubscriptionPlan = await subPlanService.createSubscriptionPlan({ ...subscriptionPlanData, shopId, productId });
+            const newSubscriptionPlan = await subPlanService.createSubscriptionPlan({ ...subscriptionPlanData, productId });
             return res.status(201).json(
                 { success: true, message: "Subscription Plan Created", data: newSubscriptionPlan }
             );
@@ -62,20 +44,6 @@ export class SubscriptionPlanController {
             );
         }
     }
-    async getSubscriptionPlansByShopId(req: Request, res: Response) {
-        try {
-            const shopId = req.params.shopId;
-            const subscriptionPlans = await subPlanService.getSubscriptionPlansByShopId(shopId);
-            return res.status(200).json(
-                { success: true, message: "Subscription Plans Retrieved", data: subscriptionPlans }
-            );
-        }
-        catch (error) {
-            return res.status(500).json(
-                { success: false, message: "Internal Server Error" }
-            );
-        }
-    }
 
     async getActiveSubscriptionPlansByActiveStatus(req: Request, res: Response) {
         try {
@@ -93,15 +61,24 @@ export class SubscriptionPlanController {
         }
     }
 
+    async getySubscriptionPlansByShopId(req: Request, res: Response) {
+        try {
+            const shopId = req.params.shopId;
+            const subscriptionPlans = await subPlanService.getSubscriptionPlansByShopId(shopId);
+            return res.status(200).json(
+                { success: true, message: "Subscription Plans Retrieved", data: subscriptionPlans }
+            );
+        }
+        catch (error) {
+            return res.status(500).json(
+                { success: false, message: "Internal Server Error" }
+            );
+        }
+    }
+
     async updateSubscriptionPlan(req: Request, res: Response) {
         try {
-            const shopId = req.body.shopId;
             const subscriptionPlanId = req.params.id;
-            if (!shopId) {
-                return res.status(400).json(
-                    { success: false, message: "Shop Id is Required" }
-                );
-            }
             const parsedData = UpdateSubscriptionPlanDTO.safeParse(req.body);
             if (!parsedData.success) {
                 return res.status(400).json(
@@ -109,7 +86,7 @@ export class SubscriptionPlanController {
                 );
             }
             const updateData: Partial<UpdateSubscriptionPlanDTO> = parsedData.data;
-            const updatedSubscriptionPlan = await subPlanService.updateSubscriptionPlan(subscriptionPlanId, shopId, updateData);
+            const updatedSubscriptionPlan = await subPlanService.updateSubscriptionPlan(subscriptionPlanId, updateData);
             return res.status(200).json(
                 { success: true, message: "Subscription Plan Updated", data: updatedSubscriptionPlan }
             );

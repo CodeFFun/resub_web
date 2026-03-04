@@ -6,6 +6,7 @@ const router = Router();
 const subscriptionController = new SubscriptionController();
 
 router.post("/shop/:shopId", authorizedMiddleware, subscriptionController.createSubscription);
+router.get("/shop/:shopId", authorizedMiddleware, subscriptionController.getAllSubscriptionsOfAShop);
 router.get("/user", authorizedMiddleware, subscriptionController.getAllSubscriptionsOfAUser);
 router.get("/user/status", authorizedMiddleware, subscriptionController.getSubscriptionsByStatus);
 router.get("/:id", authorizedMiddleware, subscriptionController.getSubscriptionById);

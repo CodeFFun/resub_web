@@ -20,8 +20,12 @@ export type LoginUserDTO = z.infer<typeof LoginUserDTO>;
 export const RoleDTO = UserSchema.pick(
     {
         role: true,
+        password: true,
     }
-)
+).partial({
+    password: true,
+    role: true,
+})
 export type RoleDTO = z.infer<typeof RoleDTO>;
 export const UpdateUserDTO = UserSchema.pick({
     fullName: true,

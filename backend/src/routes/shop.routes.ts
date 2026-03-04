@@ -6,9 +6,10 @@ import { uploads } from "../middleware/upload.middleware";
 let shopController = new ShopController();
 const router = Router();
 
-router.post("/create", authorizedMiddleware, shopOnlyMiddleware, uploads.single("shop_banner"), shopController.createShop);
+router.get("/all", authorizedMiddleware, shopController.getAllShops);
 router.get("/user", authorizedMiddleware, shopOnlyMiddleware, shopController.getAllShopsOfAUser);
-router.get("/:id", authorizedMiddleware, shopOnlyMiddleware, shopController.getShopById);
+router.get("/:id", authorizedMiddleware, shopController.getShopById);
+router.post("/create", authorizedMiddleware, shopOnlyMiddleware, uploads.single("shop_banner"), shopController.createShop);
 router.patch("/:id", authorizedMiddleware, shopOnlyMiddleware, uploads.single("shop_banner"), shopController.updateShop);
 router.delete("/:id", authorizedMiddleware, shopOnlyMiddleware, shopController.deleteShop);
 

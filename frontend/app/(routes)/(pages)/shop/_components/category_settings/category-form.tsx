@@ -23,7 +23,8 @@ export default function CategoryForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isUpdate, setIsUpdate] = useState(false);
   const [shops, setShops] = useState<{ _id: string; name: string }[]>([]);
-  const [filterShop, setFilterShop] = useState<string[]>([]);
+  const [selectedShops, setSelectedShops] = useState<string[]>([]);
+  const [listFilterShop, setListFilterShop] = useState<string | null>(null);
   const [editCategory, setEditCategory] = useState({
     id: "",
     name: "",
@@ -68,13 +69,12 @@ export default function CategoryForm() {
         description: editCategory.description,
       };
       const res = await handleupdateProductCategory(editCategory.id, formData);
-      // const res = await Promise.all(filterShop.map(shopId => handleupdateProductCategory(editCategory.id, { ...formData, shopId })));
       if(res.success) {
         toast.success("Category updated successfully");
       }
       setIsUpdate(false);
       setEditCategory({ id: "", name: "", description: "" });
-      setFilterShop([]);
+      setSelectedShops([]);
       fetchProductCategories();
     } else {
       if (!name || !description) {
@@ -82,13 +82,17 @@ export default function CategoryForm() {
         return;
       }
       
+      if (selectedShops.length === 0) {
+        alert("Please select at least one shop");
+        return;
+      }
+
       // Add new category
       const formData = {
         name,
         description,
       };
-      // const res = await handleCreateProductCategory(formData);
-      const res = await Promise.all(filterShop.map(shopId => handleCreateProductCategory({ ...formData, shopId })));
+      const res = await Promise.all(selectedShops.map(shopId => handleCreateProductCategory({ ...formData, shopId })));
       if(res.every(r => r.success)) {
         toast.success("Category created successfully");
       } else {        
@@ -96,7 +100,7 @@ export default function CategoryForm() {
       }
       setName("");
       setDescription("");
-      setFilterShop([]);
+      setSelectedShops([]);
       fetchProductCategories();
     }
   };
@@ -128,12 +132,15 @@ export default function CategoryForm() {
     setEditCategory({ id: "", name: "", description: ""});
     setName("");
     setDescription("");
-    setFilterShop([]);
+    setSelectedShops([]);
   }
 
-  const handleShopFilter = (shopId: string) => {
-    // setFilterShop((prev) => (prev === shopId ? null : shopId));
-    setFilterShop((prev) => (prev.includes(shopId) ? prev.filter(id => id !== shopId) : [...prev, shopId]) );
+  const handleShopToggle = (shopId: string) => {
+    setSelectedShops((prev) => (prev.includes(shopId) ? prev.filter(id => id !== shopId) : [...prev, shopId]) );
+  }
+
+  const handleListFilterShop = (shopId: string) => {
+    setListFilterShop((prev) => (prev === shopId ? null : shopId));
   };
 
   return (
@@ -197,18 +204,21 @@ export default function CategoryForm() {
             />
           </div>
           <div className={`mb-6 ${isUpdate ? "hidden" : ""}`}>
+            <Label className="block text-sm font-medium text-gray-700 mb-4">
+              Select Shops
+            </Label>
             <div className="grid grid-cols-4 gap-6">
               {shops.map((shop) => (
                 <div key={shop._id} className="flex items-center">
                   <input
                     type="checkbox"
-                    id={`filter-shop-${shop._id}`}
-                    checked={filterShop.includes(shop._id)}
-                    onChange={() => handleShopFilter(shop._id)}
+                    id={`select-shop-${shop._id}`}
+                    checked={selectedShops.includes(shop._id)}
+                    onChange={() => handleShopToggle(shop._id)}
                     className="w-4 h-4 text-blue-600 rounded border-gray-300 cursor-pointer"
                   />
                   <label
-                    htmlFor={`filter-shop-${shop._id}`}
+                    htmlFor={`select-shop-${shop._id}`}
                     className="ml-3 text-sm text-gray-700 cursor-pointer"
                   >
                     {shop.name}
@@ -243,6 +253,8 @@ export default function CategoryForm() {
         categories={categories}
         onDelete={handleDeleteCategory}
         onEdit={handleEditCategory}
+        filterShop={listFilterShop}
+        onFilterShopChange={handleListFilterShop}
       />
     </div>
   );

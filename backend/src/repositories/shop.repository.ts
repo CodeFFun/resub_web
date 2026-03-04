@@ -4,6 +4,7 @@ export interface IShopRepository {
     getShopById(id: string): Promise<IShop | null>;
     createShop(shopData: Partial<IShop>): Promise<IShop>;
     getAllShopsOfAUser(userId: string): Promise<IShop[]>;
+    getAllShops(): Promise<IShop[]>;
     updateShop(id: string, userId: string, updateData: Partial<IShop>): Promise<IShop | null>;
     deleteShop(id: string): Promise<boolean>;
 }
@@ -15,6 +16,9 @@ export class ShopRepository implements IShopRepository {
     async createShop(shopData: Partial<IShop>): Promise<IShop> {
         const shop = new ShopModel(shopData);
         return await shop.save();
+    }
+    async getAllShops(): Promise<IShop[]> {
+        return await ShopModel.find().populate("addressId").populate("categoryId");
     }
     async getAllShopsOfAUser(userId: string): Promise<IShop[]> {
         return await ShopModel.find({ userId }).populate("addressId").populate("categoryId");

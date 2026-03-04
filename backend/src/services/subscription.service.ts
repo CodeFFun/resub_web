@@ -22,6 +22,10 @@ export class SubscriptionService{
         return await subscriptionRepo.getSubscriptionsByStatus(userId, status)
 
     }
+    async getAllSubscriptionsOfAShop(shopId:string){
+        if(!shopId) return new HttpError(400, "Shop Id is Required");
+        return await subscriptionRepo.getAllSubscriptionsOfAShop(shopId);
+    }
     async updateSubscription(id: string, updateData: Partial<ISubscription>){
         if(!id) return new HttpError(400, "Subscription Id is Required");
         return await subscriptionRepo.updateSubscription(id, updateData)

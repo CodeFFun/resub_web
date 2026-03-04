@@ -4,14 +4,11 @@ import { useState } from "react"
 import {
   LayoutDashboard,
   User,
-  Briefcase,
-  Bookmark,
-  Settings,
   Pencil,
   Bell,
   CreditCard,
-  Lock,
   ChevronRight,
+  CircleDollarSign
 } from "lucide-react"
 
 // Object structure where key is first sidebar item and values are second sidebar items
@@ -20,18 +17,16 @@ const sidebarItems: Record<string, { label: string; icon: React.ElementType }[]>
     { label: "My Profile", icon: Pencil },
     { label: "Notification", icon: Bell },
   ],
-  Setting: [
-    { label: "Choose Plan", icon: CreditCard },
-    { label: "Password & Security", icon: Lock },
+  Orders: [
+    { label: "My Orders", icon: CreditCard },
+    { label: "My Subscriptions", icon: CircleDollarSign },
   ],
 }
 
 const mainSidebarIcons: Record<string, React.ElementType> = {
   Dashboard: LayoutDashboard,
   Profile: User,
-  "Job feed": Briefcase,
-  "Save Jobs": Bookmark,
-  Setting: Settings,
+  Orders: CreditCard,
 }
 
 interface SidebarProps {

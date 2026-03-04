@@ -4,9 +4,10 @@ import { SubscriptionPlanSchema } from "../types/subscription-plan.type"
 export const CreateSubscriptionPlanDTO = SubscriptionPlanSchema.pick(
     {
         frequency: true,
-        interval_value: true,
         price_per_cycle: true,
-        shopId: true,
+        productId: true,
+        active: true,
+        quantity: true,
     }
 )
 

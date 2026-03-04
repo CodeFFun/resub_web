@@ -20,10 +20,9 @@ export class SubscriptionPlanService{
         if(!shopId) return new HttpError(400, "Shop Id is Required");
         return await subscriptionPlanRepo.getActiveSubscriptionPlansByActiveStatus(shopId, active);
     }
-    async updateSubscriptionPlan(id: string, shopId: string,updateData: Partial<ISubscriptionPlan>){
+    async updateSubscriptionPlan(id: string, updateData: Partial<ISubscriptionPlan>){
         if(!id) return new HttpError(400, "Subscription Id is Required");
-        if(!shopId) return new HttpError(400, "Shop Id is Required");
-        return await subscriptionPlanRepo.updateSubscriptionPlan(id, shopId, updateData);
+        return await subscriptionPlanRepo.updateSubscriptionPlan(id, updateData);
     }
     async deleteSubscriptionPlan(id: string){
         if(!id) return new HttpError(400, "Subscription Id is Required");

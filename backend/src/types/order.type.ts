@@ -7,7 +7,6 @@ const objectIdSchema = z.string().refine((val) => mongoose.Types.ObjectId.isVali
 
 export const OrderSchema = z.object({
     delivery_type: z.string().min(1),
-    total_amount: z.number().positive(),
     created_at: z.date().or(z.string()).optional(),
     schedule_for: z.date().or(z.string()).optional(),
     subscriptionId: objectIdSchema.optional(),

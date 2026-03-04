@@ -56,6 +56,25 @@ export const getAllShopsOfAUser  = async () => {
     }
 };
 
+export const getAllShops  = async () => {
+    const token = await getAuthToken();
+    if (!token) {
+        throw new Error("No auth token found");
+    }
+    try {        
+        const response = await axiosInstance.get(`${API.AUTH.SHOP}/all`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    }
+    catch (error) {
+        console.error("Error getting all shops:", error);
+        throw error;
+    }
+};
+
 export const updateShop  = async (id:string, formData:FormData) => {
     const token = await getAuthToken();
     if (!token) {

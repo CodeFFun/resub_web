@@ -3,6 +3,7 @@ import { IOrderItem, OrderItemModel } from "../model/order-item.model";
 export interface IOrderItemRepository {
     createOrderItem(orderItemData: Partial<IOrderItem>): Promise<IOrderItem>;
     getOrderItemById(id: string): Promise<IOrderItem | null>;
+    
     updateOrderItem(id: string, updateData: Partial<IOrderItem>): Promise<IOrderItem | null>;
     deleteOrderItem(id: string): Promise<boolean>;
 }
@@ -22,7 +23,6 @@ export class OrderItemRepository implements IOrderItemRepository {
         const updatedOrderItem = await OrderItemModel.findByIdAndUpdate(
             id,
             updateData,
-            { new: true }
         );
         return updatedOrderItem;
     }

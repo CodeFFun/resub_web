@@ -1,4 +1,4 @@
-import { createProductCategory, deleteProductCategory, getAllProductCategories, getProductCategoryById, updateProductCategory } from "../api/product-category";
+import { getProductCategoriesByShopId,createProductCategory, deleteProductCategory, getAllProductCategories, getProductCategoryById, updateProductCategory } from "../api/product-category";
 
 export const handleCreateProductCategory = async (formData:any) => {
     try {
@@ -53,6 +53,25 @@ export const handleGetProductCategoryById = async (categoryId:string) => {
         return {
             success: false,
             message: error || "An error occurred while fetching the product category."
+        }
+    }
+}
+
+export const handleGetAllProductCategoriesOfAShop = async (shopId:string) => {
+    try {
+        const res = await getProductCategoriesByShopId(shopId);
+        if(res.success){
+            return{
+                success: true,
+                message: res.message,
+                data: res.data
+            }
+        }
+        return{success: false, message: res.message}
+    } catch (error: Error | any) {
+        return {
+            success: false,
+            message: error || "An error occurred while fetching the product categories of the shop."
         }
     }
 }

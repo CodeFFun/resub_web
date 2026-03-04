@@ -91,6 +91,25 @@ export class SubscriptionController {
         }
     }
 
+    async getAllSubscriptionsOfAShop(req:Request, res:Response){
+        try{
+            const shopId = req.params.shopId;
+            if(!shopId){
+                return res.status(400).json(
+                    { success: false, message: "Shop Id is Required" }
+                );
+            }
+            const subscriptions = await subscriptionService.getAllSubscriptionsOfAShop(shopId);
+            return res.status(200).json(
+                { success: true, message: "Subscriptions retrieved", data: subscriptions }
+            );
+        } catch (error: Error | any) {
+            return res.status(error.statusCode ?? 500).json(
+                { success: false, message: error.message || "Internal Server Error" }
+            );
+        }
+    }
+
     async updateSubscription(req:Request, res:Response){
         try{
             const subscriptionId = req.params.id;

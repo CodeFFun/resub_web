@@ -8,10 +8,8 @@ const router = Router();
 router.use(authorizedMiddleware);
 router.get("/", shopCategoryController.getAllShopCategories);
 router.get("/:id", shopCategoryController.getShopCategoryById);
-
-router.use(adminOnlyMiddleware)
-router.post("/create", shopCategoryController.createShopCategory);
-router.patch("/:id", shopCategoryController.updateShopCategory);
-router.delete("/:id", shopCategoryController.deleteShopCategory);
+router.post("/create", adminOnlyMiddleware,shopCategoryController.createShopCategory);
+router.patch("/:id", adminOnlyMiddleware,shopCategoryController.updateShopCategory);
+router.delete("/:id", adminOnlyMiddleware, shopCategoryController.deleteShopCategory);
 
 export default router;

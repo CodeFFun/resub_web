@@ -6,6 +6,7 @@ let productCategoryController = new ProductCategoryController();
 const router = Router();
 
 router.use(authorizedMiddleware);
+router.get("/shop/:shopId", productCategoryController.getAllProductCategoriesByShopId);
 router.use(shopOnlyMiddleware)
 
 router.get("/", productCategoryController.getAllProductCategories);

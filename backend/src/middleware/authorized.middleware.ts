@@ -30,8 +30,6 @@ export const authorizedMiddleware =
             req.user = user; 
             return next();
         }catch(error: Error | any){
-            console.error('AUTHORIZED MIDDLEWARE ERROR:', error.message);
-            console.error('Error stack:', error.stack);
             return res.status(error.statusCode ?? 500).json(
                 { success: false, message: error.message || "Internal Server Error" }
             );   
@@ -49,7 +47,6 @@ export const shopOnlyMiddleware =
             }
             return next();
         }catch(error: Error | any){
-            console.error('SHOP ONLY MIDDLEWARE ERROR:', error.message);
             return res.status(error.statusCode ?? 500).json(
                 { success: false, message: error.message || "Internal Server Error" }
             );   

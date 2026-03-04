@@ -62,6 +62,21 @@ export const updateProductCategory = async(categoryId:string, formData:any) => {
     }
 }
 
+export const getProductCategoriesByShopId = async(shopId:string) => {
+    try{
+        const token = await getAuthToken();
+        const res = await axiosInstance.get(`${API.AUTH.PRODUCT_CATEGORY}/shop/${shopId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.error("Error fetching product categories by shop ID:", error);
+        throw error;
+    }
+}
+
 export const deleteProductCategory = async(categoryId:string) => {
     try{
         const token = await getAuthToken();

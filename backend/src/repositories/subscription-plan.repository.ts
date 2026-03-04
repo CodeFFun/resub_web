@@ -5,7 +5,7 @@ export interface ISubscriptionPlanRepository {
     getSubscriptionPlanById(id: string): Promise<ISubscriptionPlan | null>;
     getSubscriptionPlansByShopId(shopId: string): Promise<ISubscriptionPlan[]>;
     getActiveSubscriptionPlansByActiveStatus(shopId: string, active:boolean): Promise<ISubscriptionPlan[]>;
-    updateSubscriptionPlan(id: string, shopId: string,updateData: Partial<ISubscriptionPlan>): Promise<ISubscriptionPlan | null>;
+    updateSubscriptionPlan(id: string, updateData: Partial<ISubscriptionPlan>): Promise<ISubscriptionPlan | null>;
     deleteSubscriptionPlan(id: string): Promise<boolean>;
 }
 
@@ -31,9 +31,9 @@ export class SubscriptionPlanRepository implements ISubscriptionPlanRepository {
         return subscriptionPlans;
     }
 
-    async updateSubscriptionPlan(id: string, shopId: string, updateData: Partial<ISubscriptionPlan>): Promise<ISubscriptionPlan | null> {
+    async updateSubscriptionPlan(id: string, updateData: Partial<ISubscriptionPlan>): Promise<ISubscriptionPlan | null> {
         const updatedSubscriptionPlan = await SubscriptionPlanModel.findByIdAndUpdate(
-            { _id: id, shopId: shopId },
+            { _id: id },
             updateData,
             { new: true }
         );

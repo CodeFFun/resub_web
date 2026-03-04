@@ -13,8 +13,8 @@ router.get("/users/role/:role", authController.getUSersByRole)
 router.post("/register", authController.register)
 router.post("/login", authController.login)
 router.patch("/update", authorizedMiddleware, uploads.single("profilePictureUrl"), authController.updateUser)
-//admin routes
 router.patch("/update-by-email", authController.updateUserByEmail);
+//admin routes
 router.post("/admin/create-users", authorizedMiddleware,adminOnlyMiddleware, authController.register);
 router.get("/admin/users", authorizedMiddleware,adminOnlyMiddleware, authController.getAllUsers);
 router.get("/admin/users/:id",authorizedMiddleware,adminOnlyMiddleware, authController.getUserById);
