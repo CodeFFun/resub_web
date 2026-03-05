@@ -123,9 +123,7 @@ export class AuthController {
 
     async updateUserByEmail(req: Request, res: Response) {
         try{
-            console.log(req.body)
             const email = req.body.email;
-            console.log(email)
             const parsedData = RoleDTO.safeParse(req.body);
             if (!parsedData.success) {
                 return res.status(400).json(
