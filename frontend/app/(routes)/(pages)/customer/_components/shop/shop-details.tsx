@@ -95,7 +95,7 @@ export default function ShopDetail() {
   if (!shop) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-xl text-gray-600">Shop not found</p>
+        <p className="text-xl text-muted-foreground">Shop not found</p>
       </div>
     );
   }
@@ -168,7 +168,7 @@ export default function ShopDetail() {
     }
   }
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full min-h-screen bg-card">
       <div className="relative w-full h-96">
         <Image
           unoptimized
@@ -190,7 +190,7 @@ export default function ShopDetail() {
             <div className="text-white">
               <h1 className="text-3xl font-bold mb-2">{shop.name}</h1>
               <p className="text-sm mb-1 flex items-center gap-1">
-                <span className="text-yellow-400">●</span>{" "}
+                <span className="text-accent">●</span>{" "}
                 {shop.categoryId?.name}
               </p>
               <p className="text-sm flex items-center gap-2">
@@ -203,21 +203,21 @@ export default function ShopDetail() {
       </div>
       <div className="max-w-6xl mx-auto">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full rounded-none border-b border-gray-200 bg-white">
+          <TabsList className="w-full rounded-none border-b border-border bg-card">
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="about">About</TabsTrigger>
           </TabsList>
           <TabsContent value="products" className="p-8">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               <div className="lg:col-span-1">
-                <h3 className="text-sm font-semibold text-green-600 mb-4">
+                <h3 className="text-sm font-semibold text-accent mb-4">
                   Categories
                 </h3>
                 <div className="space-y-2">
                   {categories.map((category) => (
                     <button
                       key={category._id}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded transition-colors"
+                      className="block w-full text-left px-4 py-2 text-sm text-muted-foreground hover:bg-secondary rounded transition-colors"
                     >
                       {category.name}
                     </button>
@@ -229,13 +229,13 @@ export default function ShopDetail() {
                   {products.map((product: PRODUCT) => (
                     <div
                       key={product._id}
-                      className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                      className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
                     >
                       <div className="p-4 w-full grid grid-cols-3 h-full place-items-start gap-45">
-                        <h4 className="text-lg font-medium text-gray-900 mb-2">
+                        <h4 className="text-lg font-medium text-foreground mb-2">
                           {product.name}
                         </h4>
-                        <p className="text-lg font-semibold text-green-400">
+                        <p className="text-lg font-semibold text-accent">
                           Rs.{" "}
                           {Math.abs(
                             product.base_price -
@@ -244,11 +244,11 @@ export default function ShopDetail() {
                         </p>
                         <div>
                           <Heart
-                            className={`${shop.accepts_subscription === true ? "" : "hidden"}  w-5 h-5 text-gray-400 hover:text-red-500 cursor-pointer`}
+                            className={`${shop.accepts_subscription === true ? "" : "hidden"}  w-5 h-5 text-muted-foreground hover:text-destructive cursor-pointer`}
                             onClick={() => addSubs(product)}
                           />
                           <ShoppingCart
-                            className="w-5 h-5 text-gray-400 hover:text-blue-500 cursor-pointer ml-4"
+                            className="w-5 h-5 text-muted-foreground hover:text-accent cursor-pointer ml-4"
                             onClick={() => addOrder(product)}
                           />
                         </div>
@@ -261,10 +261,10 @@ export default function ShopDetail() {
           </TabsContent>
           <TabsContent value="about" className="p-8">
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl font-bold text-foreground mb-6">
                 {shop.name}
               </h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+              <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
                 {shop.about || "No description available for this shop."}
               </p>
             </div>

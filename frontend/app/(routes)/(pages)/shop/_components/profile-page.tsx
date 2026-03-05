@@ -29,7 +29,7 @@ export default function ProfilePage({user}:{user: any}) {
   }, [activeTab])
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-secondary">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === "My Profile" && <Profile user={user} />}
       {activeTab === "Notification" && <NotificationMainbar />}

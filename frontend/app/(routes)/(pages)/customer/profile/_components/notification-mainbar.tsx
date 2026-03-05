@@ -27,15 +27,15 @@ export function NotificationMainbar() {
   return (
     <main className="flex-1 p-8">
       <div className="w-full">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Notification Settings</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-8">Notification Settings</h1>
 
-        <div className="bg-white rounded-lg p-6 border border-gray-200">
+        <div className="bg-card rounded-lg p-6 border border-border">
           <div className="space-y-6">
             {/* Email Notifications */}
-            <div className="flex items-center justify-between pb-6 border-b border-gray-200">
+            <div className="flex items-center justify-between pb-6 border-b border-border">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">Email Notifications</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <h3 className="text-sm font-semibold text-foreground">Email Notifications</h3>
+                <p className="text-sm text-muted-foreground mt-1">
                   Receive email updates about your account activity
                 </p>
               </div>
@@ -48,10 +48,10 @@ export function NotificationMainbar() {
             </div>
 
             {/* SMS Notifications */}
-            <div className="flex items-center justify-between pb-6 border-b border-gray-200">
+            <div className="flex items-center justify-between pb-6 border-b border-border">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">SMS Notifications</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <h3 className="text-sm font-semibold text-foreground">SMS Notifications</h3>
+                <p className="text-sm text-muted-foreground mt-1">
                   Receive SMS alerts for important updates
                 </p>
               </div>
@@ -64,10 +64,10 @@ export function NotificationMainbar() {
             </div>
 
             {/* Push Notifications */}
-            <div className="flex items-center justify-between pb-6 border-b border-gray-200">
+            <div className="flex items-center justify-between pb-6 border-b border-border">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">Push Notifications</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <h3 className="text-sm font-semibold text-foreground">Push Notifications</h3>
+                <p className="text-sm text-muted-foreground mt-1">
                   Receive push notifications on your devices
                 </p>
               </div>
@@ -80,10 +80,10 @@ export function NotificationMainbar() {
             </div>
 
             {/* Marketing Emails */}
-            <div className="flex items-center justify-between pb-6 border-b border-gray-200">
+            <div className="flex items-center justify-between pb-6 border-b border-border">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">Marketing Emails</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <h3 className="text-sm font-semibold text-foreground">Marketing Emails</h3>
+                <p className="text-sm text-muted-foreground mt-1">
                   Receive promotional offers and marketing emails
                 </p>
               </div>
@@ -96,10 +96,10 @@ export function NotificationMainbar() {
             </div>
 
             {/* Order Updates */}
-            <div className="flex items-center justify-between pb-6 border-b border-gray-200">
+            <div className="flex items-center justify-between pb-6 border-b border-border">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">Order Updates</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <h3 className="text-sm font-semibold text-foreground">Order Updates</h3>
+                <p className="text-sm text-muted-foreground mt-1">
                   Get notified about your order status changes
                 </p>
               </div>
@@ -114,8 +114,8 @@ export function NotificationMainbar() {
             {/* News and Offers */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">News and Offers</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <h3 className="text-sm font-semibold text-foreground">News and Offers</h3>
+                <p className="text-sm text-muted-foreground mt-1">
                   Stay updated with latest news and special offers
                 </p>
               </div>
@@ -131,7 +131,7 @@ export function NotificationMainbar() {
           <div className="mt-8 flex justify-end">
             <Button
               onClick={handleSaveNotifications}
-              className="bg-gray-800 text-white hover:bg-gray-900"
+              className="bg-primary text-primary-foreground hover:opacity-90"
             >
               Save Preferences
             </Button>

@@ -95,7 +95,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
   return (
     <aside className="flex">
-      <div className="w-48 border-r border-gray-200 p-6">
+      <div className="w-48 border-r border-border p-6">
         <nav className="space-y-2">
           {Object.keys(sidebarItems).map((item) => {
             const Icon = mainSidebarIcons[item];
@@ -105,8 +105,8 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
                 onClick={() => handleMainItemClick(item)}
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors ${
                   activeMainItem === item
-                    ? "bg-gray-100 text-black"
-                    : "text-gray-600 hover:text-black hover:bg-gray-50"
+                    ? "bg-secondary text-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                 }`}
               >
                 {Icon && <Icon size={18} />}
@@ -118,7 +118,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
       </div>
 
       {subItems.length > 0 && (
-        <div className="w-55 border-r border-gray-200 py-6 px-5">
+        <div className="w-56 border-r border-border py-6 px-5">
           <nav className="space-y-2 mt-5">
             {subItems.map((subItem) => {
               const Icon = subItem.icon;
@@ -128,8 +128,8 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
                   onClick={() => setActiveTab(subItem.label)}
                   className={`w-full flex items-center justify-between gap-3 py-3 rounded-lg text-sm font-medium transition-colors ${
                     activeTab === subItem.label
-                      ? "text-black"
-                      : "text-gray-600 hover:text-black"
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -137,7 +137,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
                     {subItem.label}
                   </div>
                   {activeTab === subItem.label && (
-                    <ChevronRight size={16} className="text-gray-400" />
+                    <ChevronRight size={16} className="text-muted-foreground" />
                   )}
                 </button>
               );

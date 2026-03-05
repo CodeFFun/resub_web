@@ -127,7 +127,7 @@ export default function ShopEditForm({
           <div>
             <Label
               htmlFor="shopName"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Shop Name
             </Label>
@@ -145,7 +145,7 @@ export default function ShopEditForm({
           <div>
             <Label
               htmlFor="pickupType"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Pickup Type
             </Label>
@@ -163,7 +163,7 @@ export default function ShopEditForm({
 
           {/* Subscription Toggle */}
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-3">
+            <Label className="block text-sm font-medium text-foreground mb-3">
               Subscription
             </Label>
             <div className="flex items-center gap-3">
@@ -171,18 +171,18 @@ export default function ShopEditForm({
                 checked={subscription}
                 onCheckedChange={setSubscription}
               />
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-muted-foreground">
                 {subscription ? "Yes" : "No"}
               </span>
             </div>
           </div>
 
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-foreground mb-2">
               Cover Image
             </Label>
             <div className="space-y-3">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors cursor-pointer">
+              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-border transition-colors cursor-pointer">
                 <input
                   type="file"
                   accept="image/*"
@@ -194,10 +194,10 @@ export default function ShopEditForm({
                   htmlFor="coverImageInput"
                   className="cursor-pointer block"
                 >
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-muted-foreground">
                     Click to upload or drag and drop
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     PNG, JPG, GIF up to 10MB
                   </p>
                 </label>
@@ -216,7 +216,7 @@ export default function ShopEditForm({
                   <button
                     type="button"
                     onClick={handleRemoveImage}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                    className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-1 hover:opacity-80"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -227,7 +227,7 @@ export default function ShopEditForm({
           <div>
             <Label
               htmlFor="address"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Address
             </Label>
@@ -246,7 +246,7 @@ export default function ShopEditForm({
             </Select>
           </div>
           <div>
-            <Badge className="bg-blue-100 text-blue-800 flex items-center gap-2 w-fit">
+            <Badge className="bg-accent/10 text-accent flex items-center gap-2 w-fit">
               {currentCategory?.name || "No Category Selected"}
 
               {selectedCategory && (
@@ -262,7 +262,7 @@ export default function ShopEditForm({
           </div>
 
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-foreground mb-2">
               Category
             </Label>
             <Select
@@ -293,7 +293,7 @@ export default function ShopEditForm({
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              className="flex-1 bg-accent hover:opacity-90 text-accent-foreground"
             >
               Save Changes
             </Button>

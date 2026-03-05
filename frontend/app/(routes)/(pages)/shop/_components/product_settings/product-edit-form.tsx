@@ -70,7 +70,7 @@ export function ProductEditForm({open, onClose, selectedProduct, categories}: {o
             <div>
               <Label
                 htmlFor="productName"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Product Name
               </Label>
@@ -86,7 +86,7 @@ export function ProductEditForm({open, onClose, selectedProduct, categories}: {o
             <div>
               <Label
                 htmlFor="basePrice"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Base Price
               </Label>
@@ -108,7 +108,7 @@ export function ProductEditForm({open, onClose, selectedProduct, categories}: {o
             <div>
               <Label
                 htmlFor="stockQuantity"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Stock Quantity
               </Label>
@@ -127,7 +127,7 @@ export function ProductEditForm({open, onClose, selectedProduct, categories}: {o
             <div>
               <Label
                 htmlFor="discountPrice"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Discount Price
               </Label>
@@ -148,7 +148,7 @@ export function ProductEditForm({open, onClose, selectedProduct, categories}: {o
           <div className="mb-6">
             <Label
               htmlFor="productDescription"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Product Description
             </Label>
@@ -164,13 +164,13 @@ export function ProductEditForm({open, onClose, selectedProduct, categories}: {o
           <div className="flex gap-4">
             <Button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-accent hover:opacity-90 text-accent-foreground"
             >
               Update Product
             </Button>
             <Button
               onClick={() => handleCancel}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-destructive hover:opacity-90 text-destructive-foreground"
             >
               Cancel
             </Button>

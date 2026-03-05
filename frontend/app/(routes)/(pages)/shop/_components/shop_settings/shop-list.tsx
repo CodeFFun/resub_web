@@ -40,17 +40,17 @@ export default function ShopList({ shops,onDelete, onEdit }: ShopListProps) {
   if (shops?.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">No shops added yet. Create your first shop above.</p>
+        <p className="text-muted-foreground">No shops added yet. Create your first shop above.</p>
       </div>
     )
   }
 
   return (
     <div className="mt-12 w-full px-10">
-      <h2 className="text-xl font-semibold text-gray-900 mb-6">Your Shops</h2>
+      <h2 className="text-xl font-semibold text-foreground mb-6">Your Shops</h2>
       
       {/* Table Header */}
-      <div className="grid grid-cols-5 gap-8 px-4 py-3 bg-gray-50 border border-gray-200 rounded-t-lg font-semibold text-gray-700 text-sm">
+      <div className="grid grid-cols-5 gap-8 px-4 py-3 bg-secondary border border-border rounded-t-lg font-semibold text-foreground text-sm">
         <div>Shop</div>
         <div>Pickup Type</div>
         <div>Subscription</div>
@@ -59,11 +59,11 @@ export default function ShopList({ shops,onDelete, onEdit }: ShopListProps) {
       </div>
 
       {/* Table Body */}
-      <div className="border-b border-l border-r border-gray-200 divide-y divide-gray-200">
+      <div className="border-b border-l border-r border-border divide-y divide-border">
         {shops?.map((shop) => (
           <div
             key={shop._id}
-            className="grid grid-cols-5 gap-8 px-4 py-4 items-center hover:bg-gray-50 transition-colors"
+            className="grid grid-cols-5 gap-8 px-4 py-4 items-center hover:bg-secondary transition-colors"
           >
             {/* Shop Image and Name */}
             <div className="flex items-center gap-3">
@@ -77,14 +77,14 @@ export default function ShopList({ shops,onDelete, onEdit }: ShopListProps) {
                   height={0}
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+                <div className="w-10 h-10 rounded-full bg-secondary"></div>
               )}
-              <p className="font-medium text-gray-900 truncate">{shop.name}</p>
+              <p className="font-medium text-foreground truncate">{shop.name}</p>
             </div>
 
             {/* Pickup Type */}
             <div>
-              <p className="text-sm text-gray-600">{shop.pickup_info}</p>
+              <p className="text-sm text-muted-foreground">{shop.pickup_info}</p>
             </div>
 
             {/* Subscription Status */}
@@ -92,13 +92,13 @@ export default function ShopList({ shops,onDelete, onEdit }: ShopListProps) {
               <div className="flex items-center gap-2">
                 {shop.accepts_subscription ? (
                   <>
-                    <Check className="w-5 h-5 text-green-500" />
-                    <span className="text-sm text-green-600">Yes</span>
+                    <Check className="w-5 h-5 text-accent" />
+                    <span className="text-sm text-accent">Yes</span>
                   </>
                 ) : (
                   <>
-                    <X className="w-5 h-5 text-red-500" />
-                    <span className="text-sm text-red-600">No</span>
+                    <X className="w-5 h-5 text-destructive" />
+                    <span className="text-sm text-destructive">No</span>
                   </>
                 )}
               </div>
@@ -107,7 +107,7 @@ export default function ShopList({ shops,onDelete, onEdit }: ShopListProps) {
             {/* Address */}
             <div>
               <p className='font-bold'>{shop.addressId.label}</p>
-              <p className="text-sm text-gray-600 truncate">{shop.addressId.line1}</p>
+              <p className="text-sm text-muted-foreground truncate">{shop.addressId.line1}</p>
             </div>
 
             {/* Three Dot Menu */}
@@ -124,7 +124,7 @@ export default function ShopList({ shops,onDelete, onEdit }: ShopListProps) {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => onDelete?.(shop._id)}
-                    className="text-red-600"
+                    className="text-destructive"
                   >
                     Delete
                   </DropdownMenuItem>

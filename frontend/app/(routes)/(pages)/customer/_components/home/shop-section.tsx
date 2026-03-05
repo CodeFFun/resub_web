@@ -51,14 +51,14 @@ export default function ShopSection() {
   const currentProducts = shops.slice(startIndex, endIndex);
 
   return (
-    <section className="w-full bg-white py-12">
+    <section className="w-full bg-card py-12">
       <div className="max-w-7xl mx-auto px-8">
         <div className="w-full flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">All Products</h2>
+        <h2 className="text-3xl font-bold text-foreground mb-8">All Products</h2>
         <Link href="/customer/shop/allshops">
           <Button
             variant="outline"
-            className="border-orange-500 text-orange-500 hover:bg-orange-50 bg-transparent"
+            className="border-accent text-accent hover:bg-accent/10 bg-transparent"
             >
             SHOP ALL PRODUCTS
           </Button>
@@ -68,7 +68,7 @@ export default function ShopSection() {
           {currentProducts.map((product) => (
             <div key={product._id} className="group cursor-pointer">
               <Link href={`/customer/shop/${product._id}`}>
-                <div className="bg-gray-100 rounded-lg p-4 mb-4 h-48 relative overflow-hidden group-hover:shadow-lg transition-shadow">
+                <div className="bg-secondary rounded-lg p-4 mb-4 h-48 relative overflow-hidden group-hover:shadow-lg transition-shadow">
                   <Image
                     unoptimized
                     src={BASE_URL + product.shop_banner}
@@ -77,10 +77,10 @@ export default function ShopSection() {
                     className="object-contain group-hover:scale-105 transition-transform"
                   />
                 </div>
-                <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-2 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-sm font-medium text-foreground line-clamp-2 mb-2 group-hover:text-accent transition-colors">
                   {product.name}
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-muted-foreground">
                   {product.categoryId?.name}
                 </p>
               </Link>

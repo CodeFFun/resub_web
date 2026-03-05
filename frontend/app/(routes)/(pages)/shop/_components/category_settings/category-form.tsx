@@ -145,13 +145,13 @@ export default function CategoryForm() {
 
   return (
     <div className="mx-auto px-4 py-8 w-full">
-      <div className="bg-white rounded-lg border border-gray-200 p-8 mb-8">
+      <div className="bg-card rounded-lg border border-border p-8 mb-8">
         <div className="mb-8">
-          <div className="bg-gray-100 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
+          <div className="bg-secondary rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-1">
               Category Information
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Create and manage product categories
             </p>
           </div>
@@ -162,7 +162,7 @@ export default function CategoryForm() {
             <div>
               <Label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Category Name
               </Label>
@@ -176,7 +176,7 @@ export default function CategoryForm() {
                     ? setEditCategory({ ...editCategory, name: e.target.value })
                     : setName(e.target.value)
                 }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
           </div>
@@ -184,7 +184,7 @@ export default function CategoryForm() {
           <div>
             <Label
               htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Description
             </Label>
@@ -200,11 +200,11 @@ export default function CategoryForm() {
                     })
                   : setDescription(e.target.value)
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
           <div className={`mb-6 ${isUpdate ? "hidden" : ""}`}>
-            <Label className="block text-sm font-medium text-gray-700 mb-4">
+            <Label className="block text-sm font-medium text-foreground mb-4">
               Select Shops
             </Label>
             <div className="grid grid-cols-4 gap-6">
@@ -215,11 +215,11 @@ export default function CategoryForm() {
                     id={`select-shop-${shop._id}`}
                     checked={selectedShops.includes(shop._id)}
                     onChange={() => handleShopToggle(shop._id)}
-                    className="w-4 h-4 text-blue-600 rounded border-gray-300 cursor-pointer"
+                    className="w-4 h-4 text-accent rounded border-border cursor-pointer"
                   />
                   <label
                     htmlFor={`select-shop-${shop._id}`}
-                    className="ml-3 text-sm text-gray-700 cursor-pointer"
+                    className="ml-3 text-sm text-foreground cursor-pointer"
                   >
                     {shop.name}
                   </label>
@@ -231,7 +231,7 @@ export default function CategoryForm() {
           <div className="pt-6 flex gap-4">
             <Button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+              className="bg-accent hover:opacity-90 text-accent-foreground font-medium py-2 px-6 rounded-lg transition-colors"
             >
               {isUpdate ? "Update Category" : "Add Category"}
             </Button>
@@ -239,7 +239,7 @@ export default function CategoryForm() {
               <Button
                 type="button"
                 onClick={handleCancel}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-medium py-2 px-6 rounded-lg transition-colors"
+                className="bg-secondary hover:opacity-70 text-foreground font-medium py-2 px-6 rounded-lg transition-colors"
               >
                 Cancel
               </Button>

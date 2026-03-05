@@ -66,11 +66,11 @@ export function RegisterForm() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           className={`w-full bg-transparent py-3 px-0 placeholder-muted-foreground focus:outline-none transition-colors ${
-            errors.username ? "border-b-2 border-red-500" : "border-b border-muted-foreground"
+            errors.username ? "border-b-2 border-destructive" : "border-b border-muted-foreground"
           }`}
           required
         />
-        {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+        {errors.username && <p className="text-destructive text-sm mt-1">{errors.username}</p>}
       </div>
 
       <div>
@@ -84,11 +84,11 @@ export function RegisterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className={`w-full bg-transparent py-3 px-0 placeholder-muted-foreground focus:outline-none transition-colors ${
-            errors.email ? "border-b-2 border-red-500" : "border-b border-muted-foreground"
+            errors.email ? "border-b-2 border-destructive" : "border-b border-muted-foreground"
           }`}
           required
         />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
       </div>
 
       <div>
@@ -102,11 +102,11 @@ export function RegisterForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className={`w-full bg-transparent py-3 px-0 placeholder-muted-foreground focus:outline-none transition-colors ${
-            errors.password ? "border-b-2 border-red-500" : "border-b border-muted-foreground"
+            errors.password ? "border-b-2 border-destructive" : "border-b border-muted-foreground"
           }`}
           required
         />
-        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+        {errors.password && <p className="text-destructive text-sm mt-1">{errors.password}</p>}
       </div>
 
       <div className="flex items-center justify-between">

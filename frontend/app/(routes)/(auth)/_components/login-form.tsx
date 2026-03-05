@@ -62,11 +62,11 @@ export function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className={`w-full bg-transparent py-3 px-0 placeholder-muted-foreground focus:outline-none transition-colors ${
-            errors.email ? "border-b-2 border-red-500" : "border-b border-muted-foreground"
+            errors.email ? "border-b-2 border-destructive" : "border-b border-muted-foreground"
           }`}
           required
         />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
       </div>
 
       <div>
@@ -80,11 +80,11 @@ export function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className={`w-full bg-transparent py-3 px-0 placeholder-muted-foreground focus:outline-none transition-colors ${
-            errors.password ? "border-b-2 border-red-500" : "border-b border-muted-foreground"
+            errors.password ? "border-b-2 border-destructive" : "border-b border-muted-foreground"
           }`}
           required
         />
-        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+        {errors.password && <p className="text-destructive text-sm mt-1">{errors.password}</p>}
       </div>
 
       <div className="space-y-3 pt-4">
@@ -92,7 +92,7 @@ export function LoginForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-[#3d3d1f] text-white px-12 py-2 rounded hover:bg-[#2d2d15] transition-colors"
+            className="bg-accent hover:opacity-90 text-accent-foreground px-12 py-2 rounded transition-colors"
           >
             {isLoading ? "Logging in..." : "Log In"}
           </Button>

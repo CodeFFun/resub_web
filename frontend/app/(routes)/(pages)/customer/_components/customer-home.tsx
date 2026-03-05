@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function CustomerHome() {
   return (
-    <main className="w-full min-h-screen bg-gray-50">
+    <main className="w-full min-h-screen bg-secondary">
       <DiscountSection />
       <CategoriesSection />
       <ShopSection />

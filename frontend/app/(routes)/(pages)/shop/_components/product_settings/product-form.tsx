@@ -105,19 +105,19 @@ export default function ProductForm() {
   };
 
   return (
-    <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-200 w-full">
+    <div className="bg-card rounded-lg p-8 shadow-sm border border-border w-full">
       <div className="mb-8">
-        <div className="bg-gray-100 rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-1">
+        <div className="bg-secondary rounded-lg p-6 mb-8">
+          <h2 className="text-xl font-semibold text-foreground mb-1">
             Product Information
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Please complete your product information
           </p>
         </div>
       </div>
       <div className="mb-8">
-        <Label className="block text-sm font-medium text-gray-700 mb-4">
+        <Label className="block text-sm font-medium text-foreground mb-4">
           Select Shops
         </Label>
         <div className="grid grid-cols-4 gap-6">
@@ -128,11 +128,11 @@ export default function ProductForm() {
                 id={`shop-${shop._id}`}
                 checked={selectedShops.includes(shop._id)}
                 onChange={() => handleShopToggle(shop._id)}
-                className="w-4 h-4 text-blue-600 rounded border-gray-300 cursor-pointer"
+                className="w-4 h-4 text-accent rounded border-border cursor-pointer"
               />
               <label
                 htmlFor={`shop-${shop._id}`}
-                className="ml-3 text-sm text-gray-700 cursor-pointer"
+                className="ml-3 text-sm text-foreground cursor-pointer"
               >
                 {shop.name}
               </label>
@@ -145,7 +145,7 @@ export default function ProductForm() {
           <div>
             <Label
               htmlFor="productName"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Product Name
             </Label>
@@ -161,7 +161,7 @@ export default function ProductForm() {
           <div>
             <Label
               htmlFor="basePrice"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Base Price
             </Label>
@@ -183,7 +183,7 @@ export default function ProductForm() {
           <div>
             <Label
               htmlFor="stockQuantity"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Stock Quantity
             </Label>
@@ -202,7 +202,7 @@ export default function ProductForm() {
           <div>
             <Label
               htmlFor="discountPrice"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Discount Price
             </Label>
@@ -223,7 +223,7 @@ export default function ProductForm() {
         <div className="mb-6">
           <Label
             htmlFor="productDescription"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-foreground mb-2"
           >
             Product Description
           </Label>
@@ -236,7 +236,7 @@ export default function ProductForm() {
           />
         </div>
         <div className="mb-8">
-          <Label className="block text-sm font-medium text-gray-700 mb-2">
+          <Label className="block text-sm font-medium text-foreground mb-2">
             Select Categories
           </Label>
 
@@ -255,7 +255,7 @@ export default function ProductForm() {
                       );
                     })
                   ) : (
-                    <span className="text-gray-500">Select categories</span>
+                    <span className="text-muted-foreground">Select categories</span>
                   )}
                 </div>
 
@@ -268,7 +268,7 @@ export default function ProductForm() {
                 {categories.map((option) => (
                   <label
                     key={option._id}
-                    className="flex items-center gap-2 cursor-pointer rounded px-2 py-1 hover:bg-gray-100"
+                    className="flex items-center gap-2 cursor-pointer rounded px-2 py-1 hover:bg-secondary"
                   >
                     <Checkbox
                       checked={selectedOptions.includes(option._id)}
@@ -284,14 +284,14 @@ export default function ProductForm() {
         <div className="flex gap-4">
           <Button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-accent hover:opacity-90 text-accent-foreground"
           >
             Add Product
           </Button>
           <Button
             type="button"
             onClick={handleClearForm}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-900"
+            className="bg-muted hover:opacity-70 text-foreground"
           >
             Clear Form
           </Button>
