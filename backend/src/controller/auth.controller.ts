@@ -132,10 +132,12 @@ export class AuthController {
             }
             const updateData = parsedData.data;
             const updatedUser = await userService.updateUserByEmail(email, updateData);
+            console.log(updatedUser);
             return res.status(200).json(
                 { success: true, message: "User updated", data: updatedUser }
             );
         } catch (error: Error | any) {
+            console.log(error);
             return res.status(error.statusCode ?? 500).json(
                 { success: false, message: error.message || "Internal Server Error" }
             );
