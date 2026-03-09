@@ -6,6 +6,17 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/resub_db";
 
 // Define Schemas
+const UserSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    username: { type: String, required: true },
+    role: { type: String, required: true },
+    alternateEmail: { type: String },
+    fullName: { type: String },
+    phoneNumber: { type: String },
+    profilePictureUrl: { type: String },
+}, { timestamps: true });
+
 const AddressSchema = new mongoose.Schema({
     label: { type: String, required: true },
     line1: { type: String, required: true },
@@ -91,6 +102,7 @@ const ShopCategorySchema = new mongoose.Schema({
     description: { type: String },
 }, { timestamps: true });
 
+const User = mongoose.model('User', UserSchema);
 const Address = mongoose.model('Address', AddressSchema);
 const Shop = mongoose.model('Shop', ShopSchema);
 const ShopCategory = mongoose.model('ShopCategory', ShopCategorySchema);
@@ -106,6 +118,39 @@ const Payment = mongoose.model('Payment', PaymentSchema);
 const vendorId1 = new mongoose.Types.ObjectId("69931cadbdb67cec3d290c23"); // Shop owner
 const vendorId2 = new mongoose.Types.ObjectId("697dbeb89e90001cff960ed5"); // Shop owner
 const customerId = new mongoose.Types.ObjectId("697dfd29477a1cdb684fdcd8"); // Customer
+
+// Users data (seed first)
+const usersData = [
+    {
+        _id: vendorId2,
+        email: "sanket@gmail.com",
+        password: "Sanket@1",
+        username: "sanket",
+        role: "shop",
+        alternateEmail: "ssass@gmail.com",
+        fullName: "ram Sharma",
+        phoneNumber: "98763192182321",
+        profilePictureUrl: "/uploads/8ca4abea-b242-4568-8ab3-dbc3ccda53fd.jpg",
+    },
+    {
+        _id: customerId,
+        email: "aloo@gmail.com",
+        password: "alooaloo",
+        username: "aloo",
+        role: "customer",
+        alternateEmail: "aloo121@gmail.com",
+        fullName: "sddaawwa Sharma",
+        phoneNumber: "+977 9840030334",
+        profilePictureUrl: "/uploads/34e24c25-0856-4454-a8bc-869721aecf7c.jpg",
+    },
+    {
+        _id: vendorId1,
+        email: "shop@gmail.com",
+        password: "shopshop",
+        username: "shop",
+        role: "shop",
+    },
+];
 
 // Sample shop banners from uploads folder
 const shopBanners = [
@@ -468,7 +513,13 @@ async function seedDatabase() {
         await ShopCategory.deleteMany({});
         await ProductCategory.deleteMany({});
         await Product.deleteMany({});
+        await User.deleteMany({ _id: { $in: [vendorId1, vendorId2, customerId] } });
         console.log('✅ Existing data cleared\n');
+
+        // Create users first
+        console.log('👥 Creating users...');
+        const users = await User.insertMany(usersData);
+        console.log(`✅ Created ${users.length} users\n`);
 
         // Create shop categories (universal)
         console.log('🏷️  Creating shop categories...');
@@ -738,6 +789,9 @@ async function deleteSeededData() {
         
         const productResult = await Product.deleteMany({});
         console.log(`   ✅ Deleted ${productResult.deletedCount} products`);
+
+        const userResult = await User.deleteMany({ _id: { $in: [vendorId1, vendorId2, customerId] } });
+        console.log(`   ✅ Deleted ${userResult.deletedCount} users`);
 
         console.log('\n🎉 All seeded data deleted successfully!');
 
